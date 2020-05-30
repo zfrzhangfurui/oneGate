@@ -1,0 +1,27 @@
+<section>
+    <div class="title">
+        <p>账户密码登录</p>
+    </div>
+    <div class="login__div">
+        <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input your username!">
+                    <nz-input-group nzPrefixIcon="user">
+                        <input type="text" nz-input class="input" formControlName="a" placeholder="Username" />
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please input your Password!">
+                    <nz-input-group nzPrefixIcon="lock">
+                        <input type="password" nz-input class="input" formControlName="p" placeholder="Password" />
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+
+            <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">
+                Log in
+            </button>
+        </form>
+    </div>
+</section>
