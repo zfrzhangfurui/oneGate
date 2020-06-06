@@ -4,22 +4,15 @@ import { tap, catchError, switchMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 // local imports
 import { throwError, of } from 'rxjs';
-import { Me } from '../model/me';
 // import { IvoryUnauthorizedError } from '../error';
 import {
-    Login, Logout,
+    Login, Logout, FetchMe
     //  Register, UpdatePublicInformation, FetchMe
 } from './user.action';
 
 export interface UserStateModel {
     id: number;
     nickname: string;
-    description: string;
-    phone: string;
-    email: string;
-    avatar: string;
-    banner: string;
-    register_time: number;
 }
 
 type Context = StateContext<UserStateModel>;
@@ -27,12 +20,6 @@ type Context = StateContext<UserStateModel>;
 const defaultUserState = {
     id: -1,
     nickname: 'nanashi',
-    description: '',
-    phone: '',
-    email: '',
-    avatar: '',
-    banner: '',
-    register_time: 0
 };
 
 @State<UserStateModel>({
@@ -74,15 +61,21 @@ export class UserState {
             p: action.password,
             // v: action.verify_code
         })
-        // .pipe(
-        //     switchMap(_=>{
-        //         console.log(_);
-        //         return ctx.dispatch(new FetchMe());
-        //     }),
-        //     tap(_ => {
+            .pipe(
 
-        //     })
-        // )
+                tap(_ => {
+                    console.log({ id: 123, nickname: 'jin lai la' });
+                    ctx.patchState({ id: 123, nickname: 'jin lai la' });
+
+                }),
+                catchError(e => {
+                    // if (e instanceof IvoryUnauthorizedError) {
+                    //     console.log('not logined');
+                    //     return of(undefined);
+                    // }
+                    return throwError(e);
+                })
+            )
     }
 
     @Action(Logout)
@@ -124,15 +117,16 @@ export class UserState {
 
     // @Action(FetchMe)
     // fetch(ctx: Context) {
-    //     return this.http.get<Me>('/user/me').pipe(
+    //     return this.http.get<UserStateModel>('/user/me').pipe(
     //         tap(s => {
+    //             console.log(s);
     //             ctx.patchState(s);
     //         }),
     //         catchError(e => {
-    //             if (e instanceof IvoryUnauthorizedError) {
-    //                 console.log('not logined');
-    //                 return of(undefined);
-    //             }
+    //             // if (e instanceof IvoryUnauthorizedError) {
+    //             //     console.log('not logined');
+    //             //     return of(undefined);
+    //             // }
     //             return throwError(e);
     //         }),
     //     )

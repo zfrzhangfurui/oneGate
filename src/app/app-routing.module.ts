@@ -4,7 +4,9 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   { path: '', loadChildren: () => import('./pages/review/review.module').then(m => m.ReviewModule) },
+  // { path: '', loadChildren: () => import('./pages/passport/passport.module').then(m => m.PassportModule) },
   { path: 'passport', loadChildren: () => import('./pages/passport/passport.module').then(m => m.PassportModule) },
+
   { path: 'login', redirectTo: 'passport/login' }
 ];
 

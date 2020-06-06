@@ -35,7 +35,7 @@ registerLocaleData(zh);
       // executionStrategy: NoopNgxsExecutionStrategy
     }),
     FormsModule,
-    HttpClientModule,
+    // HttpClientModule,
     BrowserAnimationsModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: zh_CN }],

@@ -1,1 +1,115 @@
-<p>arts-review works!</p>
+<main>
+    <section class="review__menu">
+        <div class="review__menu-title">审核管理-作品审核</div>
+        <form [formGroup]="form">
+            <div class="review__menu-nav">
+                <nz-radio-group formControlName="c" nzButtonStyle="solid">
+                    <label nz-radio-button class="review__menu-nav-button" (click)="changeMode()"
+                        [nzValue]="0">待审核(21)</label>
+                    <label nz-radio-button class="review__menu-nav-button" (click)="changeMode()"
+                        [nzValue]="1">已通过</label>
+                    <label nz-radio-button class="review__menu-nav-button" (click)="changeMode()"
+                        [nzValue]="2">已拒绝</label>
+                </nz-radio-group>
+
+            </div>
+
+            <div class="review__menu-searchbar">
+
+                <div nz-row [nzGutter]="8" nzJustify="space-around">
+
+                    <div class="menu-searchbar-div" nz-col nzSpan="3">
+                        <label>作品ID：</label>
+
+                        <input class="review__menu-searchbar-item_input" placeholder="请输入" formControlName="w" />
+                    </div>
+                    <div class="menu-searchbar-div" nz-col nzSpan="3">
+                        <label>作品名称：</label>
+                        <input class="review__menu-searchbar-item_input" placeholder="请输入" formControlName="n" />
+                    </div>
+                    <div class="menu-searchbar-div" nz-col nzSpan="3">
+                        <label>提交用户：</label>
+                        <input class="review__menu-searchbar-item_input" placeholder="请输入" formControlName="un" />
+                    </div>
+                    <div class="menu-searchbar-div" nz-col nzSpan="6">
+                        <div>
+                            <label>开始时间</label>
+                            -
+                            <label>结束时间</label>
+                        </div>
+
+                        <div>
+                            <nz-date-picker class="review__menu-searchbar-item_input" nzFormat="yyyy/MM/dd"
+                                formControlName="st" nzPlaceHolder="Select Time" name="st">
+                            </nz-date-picker>
+                            --
+                            <nz-date-picker class="review__menu-searchbar-item_input" nzFormat="yyyy/MM/dd"
+                                formControlName="et" nzPlaceHolder="Select Time" name="et">
+                            </nz-date-picker>
+                        </div>
+                    </div>
+                    <div class="menu-searchbar-div" nz-col nzSpan="3">
+                        <label>作品类型：</label>
+                        <nz-select class="review__menu-searchbar-item_input" formControlName="t">
+                            <nz-option [nzValue]="-1" nzLabel="全部"></nz-option>
+                            <nz-option [nzValue]="0" nzLabel="Live2D"></nz-option>
+                            <nz-option [nzValue]="1" nzLabel="立绘"></nz-option>
+                        </nz-select>
+                    </div>
+                    <div class="menu-searchbar-div" nz-col nzSpan="3">
+                        <label>作品分类：</label>
+                        <nz-select class="review__menu-searchbar-item_input" formControlName="ta">
+                            <nz-option [nzValue]="-1" nzLabel="全部"></nz-option>
+                            <nz-option [nzValue]="0" nzLabel="作品"></nz-option>
+                            <nz-option [nzValue]="1" nzLabel="商品"></nz-option>
+                            <nz-option [nzValue]="2" nzLabel="出售过的商品"></nz-option>
+                        </nz-select>
+                    </div>
+                </div>
+                <div class="review__menu-searchbar-confirm">
+                    <button nz-button nzType="primary" role="button" (click)="onSubmit()">
+                        <i nz-icon nzType="search"></i>搜索
+                    </button>
+                    <button nz-button nzType="default" role="button" (click)="onReset()">
+                        <i nz-icon nzType="close"></i>重置
+                    </button>
+
+
+
+                </div>
+            </div>
+        </form>
+    </section>
+    <section class="review__table-section">
+        <nz-table #basicTable [nzData]="tableData$|async" [nzFrontPagination]="false" [nzTotal]="total"
+            [nzPageSize]="tablePageConfig.s" [nzPageIndex]="tablePageConfig.p"
+            (nzQueryParams)="onQueryParamsChange($event)">
+            <thead>
+                <tr>
+                    <th>作品ID</th>
+                    <th>作品名称</th>
+                    <th>提交用户</th>
+                    <th>{{currentMode === 0 ? '提交时间': '审核时间'}}</th>
+                    <th>作品分类</th>
+                    <th>作品类型</th>
+                    <th>附件内容</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of basicTable.data">
+                    <td>{{ data.workid }}</td>
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.name }}</td>
+                    <td>
+                        {{ momentUnix(data.publishtime).format("YYYY/MM/DD") }}
+                    </td>
+                    <td>{{ data.type }}</td>
+                    <td>{{ data.type }}</td>
+                    <td><a>下载 {{ data.workid }}</a></td>
+                    <td (click)="inspectDetails(data.workid)"><a>查看详情</a></td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </section>
+</main>

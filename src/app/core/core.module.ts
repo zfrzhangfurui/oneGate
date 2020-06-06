@@ -10,7 +10,7 @@ import { API_GATEWAY } from './token';
 // import { VerifycodeService } from './service/verifycode.service';
 // import { ModalService } from './service/modals.service';
 
-export interface PeachaOptions {
+export interface APIOptions {
     api_gateway: string;
 }
 
@@ -33,20 +33,21 @@ export function appInitializer(store: Store) {
     ]
 })
 export class CoreModule {
-    static forRoot(options: PeachaOptions): ModuleWithProviders<CoreModule> {
+    static forRoot(options: APIOptions): ModuleWithProviders<CoreModule> {
         return {
             ngModule: CoreModule,
             providers: [
                 // Toast,
+                {
+                    provide: API_GATEWAY,
+                    useValue: options.api_gateway
+                },
                 {
                     provide: HTTP_INTERCEPTORS,
                     useClass: APIInterceptor,
                     multi: true
                 },
                 {
-                    provide: API_GATEWAY,
-                    useValue: options.api_gateway
-                }, {
                     provide: APP_INITIALIZER,
                     useFactory: appInitializer,
                     deps: [Store],

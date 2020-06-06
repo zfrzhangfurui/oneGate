@@ -6,14 +6,14 @@
         <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
             <nz-form-item>
                 <nz-form-control nzErrorTip="Please input your username!">
-                    <nz-input-group nzPrefixIcon="user">
+                    <nz-input-group>
                         <input type="text" nz-input class="input" formControlName="a" placeholder="Username" />
                     </nz-input-group>
                 </nz-form-control>
             </nz-form-item>
             <nz-form-item>
                 <nz-form-control nzErrorTip="Please input your Password!">
-                    <nz-input-group nzPrefixIcon="lock">
+                    <nz-input-group>
                         <input type="password" nz-input class="input" formControlName="p" placeholder="Password" />
                     </nz-input-group>
                 </nz-form-control>

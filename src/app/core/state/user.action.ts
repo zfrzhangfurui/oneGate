@@ -1,6 +1,6 @@
 export class Login {
     static type: string = "[User] Update login";
-    constructor(public account: string, public password: string, public verify_code?: string) { }
+    constructor(public account: string, public password: string) { }
 }
 
 export class Logout {
@@ -18,7 +18,7 @@ export class Logout {
 //     constructor(public nickname: string, public description: string,public avatar?: Blob) { }
 // }
 
-// export class FetchMe {
-//     static type: string = "[User] Fetch";
-//     constructor() { }
-// }
+export class FetchMe {
+    static type: string = "[User] Fetch";
+    constructor() { }
+}

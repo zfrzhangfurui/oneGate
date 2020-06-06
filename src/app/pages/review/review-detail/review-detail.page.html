@@ -1,0 +1,73 @@
+<section>
+    <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
+        [nzOkLoading]="isModalLoading">
+        <div *ngIf="modalMode === 'modalAccept'">
+            <p>审核通过</p>
+            <p>是否确认审核通过？</p>
+            <p>审核通过后无法撤回，请谨慎操作。</p>
+        </div>
+        <div *ngIf="modalMode === 'modalDecline'">
+            <p>审核拒绝</p>
+            <textarea class="modalDeclineInput" #declineInput></textarea>
+        </div>
+
+
+    </nz-modal>
+    <div class="detail-title">
+        <div>
+            <button (click)="backTolist()">返回</button>
+            <div>审核管理-作品审核</div>
+        </div>
+        <div *ngIf="auditType === 'auditPending'">
+            <button (click)="showAuditModal('modalAccept')">审核通过</button>
+            <button (click)="showAuditModal('modalDecline')">审核拒绝</button>
+        </div>
+        <div *ngIf="auditType === 'auditAccepted'">
+            <button (click)="showAuditModal('modalCancelPublish')">撤销发布</button>
+        </div>
+    </div>
+
+    <div class="review-officer" *ngIf="auditType === 'auditAccepted'">
+        <nz-descriptions nzTitle="审核信息" [nzColumn]="4">
+            <nz-descriptions-item nzTitle="审核人">用户ABC</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="审核时间">2020-10-10</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="审核结果">已撤销发布</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="拒绝理由">用户ABC</nz-descriptions-item>
+        </nz-descriptions>
+    </div>
+    <div class="review-information">
+        <nz-descriptions nzTitle="基础信息" [nzColumn]="4">
+            <nz-descriptions-item nzTitle="作品名称">{{artWorkInfo.baseinfo.name}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="作品ID">没有ID</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="发布用户">{{artWorkInfo.baseinfo.author_name}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="用户ID">{{artWorkInfo.baseinfo.author_id}}</nz-descriptions-item>
+        </nz-descriptions>
+    </div>
+
+    <div class="details">
+        <div class="detail-title">详细信息</div>
+
+        <div class="details-intro">
+            <div>作品介绍</div>
+            <div>
+                {{artWorkInfo.baseinfo.description}}
+            </div>
+            <div>版权声明</div>
+            <div>
+                {{artWorkInfo.baseinfo.copyright}}
+            </div>
+            <div>上传图片</div>
+            <div class="details-image">
+                <img>
+                <img>
+                <img>
+                <img>
+            </div>
+            <div>源文件</div>
+            <div class="details-download">
+                <p>源文件.PSD</p> <button>下载</button>
+            </div>
+        </div>
+
+    </div>
+</section>

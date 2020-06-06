@@ -1,61 +1,34 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from "@angular/platform-browser";
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { LoginComponent } from './login/login.component';
+import { LoginPage } from './login/login.page';
 /***************************************************************/
-import { NzLayoutModule } from "ng-zorro-antd/layout";
-import { NzTableModule } from "ng-zorro-antd/table";
-import { NzDividerModule } from "ng-zorro-antd/divider";
+import { NZ_I18N } from "ng-zorro-antd/i18n";
+import { zh_CN } from "ng-zorro-antd/i18n";
 import { NzButtonModule } from "ng-zorro-antd/button";
-import { NzIconModule } from "ng-zorro-antd/icon";
 import { NzInputModule } from "ng-zorro-antd/input";
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzFormModule } from "ng-zorro-antd/form";
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @NgModule({
-    declarations: [],
+    declarations: [LoginPage],
     imports: [
-        BrowserModule,
+
         CommonModule,
-        NzLayoutModule,
-        NzTableModule,
-        NzDividerModule,
         NzButtonModule,
-        NzIconModule,
         NzInputModule,
-        NzDatePickerModule,
         NzFormModule,
-        NzSelectModule,
-        NzRadioModule,
-        NzGridModule,
+        NzIconModule,
+        ReactiveFormsModule,
         RouterModule.forChild([{
             path: '',
-            component: LoginComponent,
-            children: [
-                // {
-                //     path: '',
-                //     component: UserProfilePage
-                // }, {
-                //     path: 'security',
-                //     component: UserSecurityPage
-                // },
-                // {
-                //     path: 'security/reset_password',
-                //     component: UserResetPage
-                // },
-                // {
-                //     path: 'security/checkset',
-                //     component: CheckResetComponent
-                // },
-            ]
-        }]),
-
-        ReactiveFormsModule,
-    ]
+            redirectTo: 'login',
+            pathMatch:'full'
+        },
+        { path: 'login', component: LoginPage }
+        ]),
+    ],
+    providers: [{ provide: NZ_I18N, useValue: zh_CN }]
 })
 export class PassportModule { }
