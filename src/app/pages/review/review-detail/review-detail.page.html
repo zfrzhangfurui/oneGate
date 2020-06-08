@@ -1,6 +1,6 @@
 <section>
     <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
-        [nzOkLoading]="isModalLoading">
+        [nzFooter]="modalFooter">
         <div *ngIf="modalMode === 'modalAccept'">
             <p>审核通过</p>
             <p>是否确认审核通过？</p>
@@ -10,38 +10,66 @@
             <p>审核拒绝</p>
             <textarea class="modalDeclineInput" #declineInput></textarea>
         </div>
-
+        <div *ngIf="modalMode === 'modalResult'">
+            <p *ngIf="requestExecuteStatus.success">审核更改成功</p>
+            <p *ngIf="requestExecuteStatus.fail">审核失败<br />
+                错误码：{{errorMessage}}
+            </p>
+        </div>
+        <ng-template #modalFooter>
+            <div *ngIf="!requestExecuteStatus.success">
+                <button nz-button nzType="default" (click)="handleCancel()">返回</button>
+                <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isModalLoading">确认</button>
+            </div>
+            <div *ngIf="requestExecuteStatus.fail">
+                <button nz-button nzType="primary" (click)="handleCancel()">确认</button>
+            </div>
+        </ng-template>
 
     </nz-modal>
+
     <div class="detail-title">
-        <div>
-            <button (click)="backTolist()">返回</button>
-            <div>审核管理-作品审核</div>
+        <div class="detail-title-left">
+            <button nz-button nzType="primary" (click)="backTolist()"><i nz-icon nzType="left"></i>返回</button>
+            <p>审核管理-作品审核</p>
         </div>
         <div *ngIf="auditType === 'auditPending'">
-            <button (click)="showAuditModal('modalAccept')">审核通过</button>
-            <button (click)="showAuditModal('modalDecline')">审核拒绝</button>
+            <button class="first-button" nz-button nzType="primary"
+                (click)="showAuditModal('modalAccept')">审核通过</button>
+            <button nz-button nzType="primary" (click)="showAuditModal('modalDecline')">审核拒绝</button>
         </div>
         <div *ngIf="auditType === 'auditAccepted'">
-            <button (click)="showAuditModal('modalCancelPublish')">撤销发布</button>
+            <button nz-button nzType="primary" (click)="showAuditModal('modalCancelPublish')">撤销发布</button>
         </div>
     </div>
 
     <div class="review-officer" *ngIf="auditType === 'auditAccepted'">
-        <nz-descriptions nzTitle="审核信息" [nzColumn]="4">
-            <nz-descriptions-item nzTitle="审核人">用户ABC</nz-descriptions-item>
-            <nz-descriptions-item nzTitle="审核时间">2020-10-10</nz-descriptions-item>
-            <nz-descriptions-item nzTitle="审核结果">已撤销发布</nz-descriptions-item>
-            <nz-descriptions-item nzTitle="拒绝理由">用户ABC</nz-descriptions-item>
+        <div class="review-officer-title">审核信息</div>
+        <nz-descriptions class="review-officer-content" [nzColumn]="4" *ngFor="let item of artWorkInfo.auditlist">
+            <nz-descriptions-item nzTitle="审核人">{{item.username}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="审核时间">{{moment(item.audittime).format("YYYY/MM/DD")}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="审核结果">{{item.check_state}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="拒绝理由">{{item.description}}</nz-descriptions-item>
         </nz-descriptions>
     </div>
     <div class="review-information">
-        <nz-descriptions nzTitle="基础信息" [nzColumn]="4">
-            <nz-descriptions-item nzTitle="作品名称">{{artWorkInfo.baseinfo.name}}</nz-descriptions-item>
-            <nz-descriptions-item nzTitle="作品ID">没有ID</nz-descriptions-item>
-            <nz-descriptions-item nzTitle="发布用户">{{artWorkInfo.baseinfo.author_name}}</nz-descriptions-item>
-            <nz-descriptions-item nzTitle="用户ID">{{artWorkInfo.baseinfo.author_id}}</nz-descriptions-item>
-        </nz-descriptions>
+        <div class="review-information-title">基础信息</div>
+        <div class="review-information-content">
+            <nz-descriptions [nzColumn]="4">
+                <nz-descriptions-item nzTitle="作品名称">{{artWorkInfo.baseinfo.name}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="作品ID">没有ID</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="发布用户">{{artWorkInfo.baseinfo.author_name}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="用户ID">{{artWorkInfo.baseinfo.price}}</nz-descriptions-item>
+            </nz-descriptions>
+
+            <nz-descriptions [nzColumn]="4">
+                <nz-descriptions-item nzTitle="提交时间">{{moment(artWorkInfo.baseinfo.createtime).format("YYYY/MM/DD")}}
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="作品分类">{{artWorkInfo.baseinfo.type}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="作品类型">{{artWorkInfo.baseinfo.state}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="出售价格">{{artWorkInfo.baseinfo.author_id}}</nz-descriptions-item>
+            </nz-descriptions>
+        </div>
     </div>
 
     <div class="details">
@@ -58,15 +86,15 @@
             </div>
             <div>上传图片</div>
             <div class="details-image">
-                <img>
-                <img>
-                <img>
-                <img>
+                <img *ngFor="let item of artWorkInfo.baseinfo.assets" [src]="item">
             </div>
             <div>源文件</div>
             <div class="details-download">
                 <p>源文件.PSD</p> <button>下载</button>
             </div>
+
+            <div>封面图</div>
+            <img class="cover-image" [src]="artWorkInfo.baseinfo.cover">
         </div>
 
     </div>

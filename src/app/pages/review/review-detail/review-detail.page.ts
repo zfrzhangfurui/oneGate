@@ -1,12 +1,15 @@
-import { Component, OnInit, OnDestroy, Input, Output, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, auditTime } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import * as moment from 'moment';
 import { SingleWork, AuditList } from '../../../core/model/singleArt.model';
+import { Observable } from 'rxjs';
 enum modalMode {
   modalAccept = 'modalAccept',
   modalDecline = 'modalDecline',
   modalCancelPublish = 'modalCancelPublish',
+  modalResult = 'modalResult',
 }
 enum AuditType {
   auditAccepted = 'auditAccepted',
@@ -19,18 +22,24 @@ enum AuditType {
   templateUrl: './review-detail.page.html',
   styleUrls: ['./review-detail.page.less']
 })
-export class ReviewDetailPage implements OnInit, OnDestroy {
+export class ReviewDetailPage implements OnInit {
   /********************modal*********************************************/
   isVisible: boolean = false;
   isModalLoading: boolean = false;
   modalTitle: string;
   modalMode: modalMode = null;
+  requestExecuteStatus: { success, fail } = {
+    success: true,
+    fail: false
+  };
+  errorMessage: string;
   @ViewChild('declineInput') declineInput: ElementRef;
   /********************modal*********************************************/
   auditType: AuditType;
-  //unsubscribe
-  routeSub;
   workid: number;
+  moment = moment;
+  //type	integer/文件类型 0:Live2D 1:原画
+  //state: 0:仅展示 1:未出售 2:已售出
   artWorkInfo: SingleWork = {
     auditlist: [
       {
@@ -65,18 +74,23 @@ export class ReviewDetailPage implements OnInit, OnDestroy {
     }
   }
 
-
+  routeSub = this.route.paramMap.pipe(
+    switchMap(params => {
+      this.workid = +params.get('workid');
+      return this.http.get<SingleWork>(`/work/get_work?w=${+params.get('workid')}`)
+    })
+  )
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
   ) { }
 
 
 
   updateReviewstatus(auditList: AuditList) {
-
+    console.log(auditList);
     if (auditList.auditlist.length > 0) {
       for (let i of auditList.auditlist) {
         if (i.check_state === 1) {
@@ -93,15 +107,42 @@ export class ReviewDetailPage implements OnInit, OnDestroy {
   showAuditModal(event) {
     this.modalMode = event;
     this.isVisible = true;
+    this.requestExecuteStatus = {
+      success: false,
+      fail: false
+    };
+    console.log(event);
     switch (event) {
       case 'modalAccept': this.modalTitle = '审核通过'; break;
       case 'modalDecline': this.modalTitle = '审核拒绝'; break;
       // case 'modalAccept': this.modalTitle = '审核通过';break;
     }
   }
+  //modal requestExecuteResult
+  requestExecuteResult(event) {
+    if (event === 'auditSuccess') {
+      this.modalMode = modalMode.modalResult;
+      this.requestExecuteStatus = {
+        success: true,
+        fail: false
+      };
+      this.isModalLoading = false;
+      setTimeout(() => {
+        this.isVisible = false;
+      }, 2000)
+    } else {
+      this.modalMode = modalMode.modalResult;
+      this.isModalLoading = false;
+      this.requestExecuteStatus = {
+        success: false,
+        fail: true
+      };
+      console.log(this.requestExecuteResult);
+    }
+
+  }
   handleCancel() {
     this.isVisible = false;
-
   }
   handleOk() {
     this.isModalLoading = true;
@@ -111,38 +152,40 @@ export class ReviewDetailPage implements OnInit, OnDestroy {
       case modalMode.modalAccept: auditResult = 1; auditMessage = ''; break;
       case modalMode.modalDecline: auditResult = 2; auditMessage = this.declineInput.nativeElement.value; break;
     }
-    this.http.post<any>('/work/audit_work', { w: this.workid, s: auditResult, d: auditMessage }).pipe(switchMap(_ => {
+    this.http.post<any>('/work/audit_work', { w: this.workid, c: auditResult, d: auditMessage }).pipe(switchMap(_ => {
       return this.http.get<SingleWork>(`/work/get_work?w=${(this.workid)}`)
     })).subscribe(data => {
       this.updatePage(data);
       console.log(this.artWorkInfo);
       console.log(this.auditType);
-      this.isModalLoading = false;
-      this.isVisible = false;
+      this.requestExecuteResult('auditSuccess');
+    }, err => {
+      this.requestExecuteResult('123')
+      this.errorMessage = err;
     })
+
   }
 
   updatePage(data) {
     this.artWorkInfo = data;
     this.updateReviewstatus(this.artWorkInfo);
+    //this.updateImages(this.artWorkInfo.baseinfo.assets);
   }
+  // updateImages(images) {
+  //   return new Observable<string[]>((observer) => {
+  //     const { next, error } = observer;
+  //     next(images);
+  //   })
+  // }
   backTolist() {
-    this.router.navigate(['arts-review']);
+    this.router.navigate([''], { relativeTo: this.route });
   }
 
   ngOnInit(): void {
-    this.routeSub = this.route.paramMap.pipe(
-      switchMap(params => {
-        this.workid = +params.get('workid');
-        return this.http.get<SingleWork>(`/work/get_work?w=${+params.get('workid')}`)
-      })
-    ).subscribe(data => {
+    this.routeSub.subscribe(data => {
       this.updatePage(data);
       console.log(this.artWorkInfo);
       console.log(this.auditType);
     })
-  }
-  ngOnDestroy() {
-    this.routeSub.unsubscribe();
   }
 }

@@ -4,11 +4,11 @@
         <form [formGroup]="form">
             <div class="review__menu-nav">
                 <nz-radio-group formControlName="c" nzButtonStyle="solid">
-                    <label nz-radio-button class="review__menu-nav-button" (click)="changeMode()"
-                        [nzValue]="0">待审核(21)</label>
-                    <label nz-radio-button class="review__menu-nav-button" (click)="changeMode()"
+                    <label nz-radio-button class="review__menu-nav-button" (click)="changeMode(0)"
+                        [nzValue]="0">待审核</label>
+                    <label nz-radio-button class="review__menu-nav-button" (click)="changeMode(1)"
                         [nzValue]="1">已通过</label>
-                    <label nz-radio-button class="review__menu-nav-button" (click)="changeMode()"
+                    <label nz-radio-button class="review__menu-nav-button" (click)="changeMode(2)"
                         [nzValue]="2">已拒绝</label>
                 </nz-radio-group>
 
@@ -67,9 +67,12 @@
                     </div>
                 </div>
                 <div class="review__menu-searchbar-confirm">
-                    <button nz-button nzType="primary" role="button" (click)="onSubmit()">
+                    <button nz-button nzType="primary" (click)="onSubmit()">
                         <i nz-icon nzType="search"></i>搜索
                     </button>
+                    <!-- <button nz-button nzType="primary" role="button" (click)="onSubmit()">
+                        <i nz-icon nzType="search"></i>搜索
+                    </button> -->
                     <button nz-button nzType="default" role="button" (click)="onReset()">
                         <i nz-icon nzType="close"></i>重置
                     </button>
@@ -82,7 +85,7 @@
     </section>
     <section class="review__table-section">
         <nz-table #basicTable [nzData]="tableData$|async" [nzFrontPagination]="false" [nzTotal]="total"
-            [nzPageSize]="tablePageConfig.s" [nzPageIndex]="tablePageConfig.p"
+            [(nzPageSize)]="tablePageConfig.s" [(nzPageIndex)]="tablePageConfig.p"
             (nzQueryParams)="onQueryParamsChange($event)">
             <thead>
                 <tr>

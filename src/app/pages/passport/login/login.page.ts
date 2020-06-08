@@ -36,7 +36,7 @@ export class LoginPage implements OnInit {
       this.store.dispatch(new Login(this.validateForm.value.a, this.validateForm.value.p)).subscribe(
         success => {
 
-          this.router.navigate(['/arts-review']);
+          this.router.navigate(['/index/review/arts-review']);
         }, e => {
           console.log(e);
           // if (e instanceof IvoryError) {

@@ -3,9 +3,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from "@angular/common/http";
-import { ReviewPage } from './review.page';
-import { ArtsReviewPage } from './arts-review/arts-review.page';
-import { ReviewDetailPage } from './review-detail/review-detail.page';
 /********************************************************************/
 import { NzLayoutModule } from "ng-zorro-antd/layout";
 import { NzTableModule } from "ng-zorro-antd/table";
@@ -22,16 +19,16 @@ import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { OnlyLoggedInUserGuard } from '../../core/guard/only-logged-in.guard';
+/********************************************************************/
+import { CustomerPage } from './customer.page';
+import { CustomerAuthPage } from './customer-auth/customer-auth.page';
 
 @NgModule({
     declarations: [
-        ReviewPage,
-        ArtsReviewPage,
-        ReviewDetailPage
+
     ],
     imports: [
         CommonModule,
-        // HttpClientModule,
         NzLayoutModule,
         NzTableModule,
         NzDividerModule,
@@ -48,28 +45,28 @@ import { OnlyLoggedInUserGuard } from '../../core/guard/only-logged-in.guard';
         NzMenuModule,
         RouterModule.forChild([{
             path: '',
-            component: ReviewPage,
+            component: CustomerPage,
             children: [
                 {
-                    path: '', redirectTo: 'arts-review'
+                    path: '', redirectTo: 'customer-auth'
                     , pathMatch: 'full'
                 }
                 ,
                 {
-                    path: 'arts-review',
+                    path: 'customer-auth',
                     // canActivate: [OnlyLoggedInUserGuard],
                     // path: '',
-                    component: ArtsReviewPage
+                    component: CustomerAuthPage
                 },
-                {
-                    path: 'arts-review/:workid',
-                    //   canActivate: [OnlyLoggedInUserGuard],
-                    component: ReviewDetailPage
-                }
+                // {
+                //     path: 'arts-review/:workid',
+                //     //   canActivate: [OnlyLoggedInUserGuard],
+                //     component: ReviewDetailPage
+                // }
             ]
         }]),
 
         ReactiveFormsModule,
     ]
 })
-export class ReviewModule { }
+export class CustomerAuthModule { }
