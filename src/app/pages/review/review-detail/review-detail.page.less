@@ -1,5 +1,6 @@
 section{
     padding: 10px 20px;
+    padding-bottom: 30px;
     &>.detail-title{
         display: flex;
         flex-direction: row;
@@ -59,9 +60,17 @@ section{
             font-size: 16px;
         }
         &>.details-intro{
-        
+            &>.details-intro-p{
+                font-family: 'PingFang';
+            }
+            &>.details-intro-content{
+                // padding-top:10px;
+                padding-bottom: 20px;
+            }
             padding: 20px 30px;
-            
+            &>.image-upload{
+                padding:20px 0;
+            }
             &>.details-image{
                 display: flex;
                 align-items: center;
@@ -75,9 +84,32 @@ section{
                 }
             }
             &>.details-download{
-                display: flex;
-                flex-direction: row;
-                
+                padding:20px 0;
+               &>.title{
+                padding-bottom: 10px;
+                margin-bottom: 0;
+               }
+               &>.download{
+                   display: flex;
+                   flex-direction: row;
+                   align-items: flex-start;
+                  
+               }
+                 &>.download button{
+                   margin-left: 50px; 
+               }
+            }
+
+            &>.tag{
+                padding:20px 0;
+                &>.title{
+                    padding-bottom: 10px;
+                    margin-bottom: 0;
+                    // padding:10px 20px;
+                    &> i{
+                        background-image: url(/assets/svgs/tags.svg);
+                    }
+                }
             }
             &>.cover-image{
                 width: 400px;

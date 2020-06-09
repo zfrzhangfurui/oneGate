@@ -12,6 +12,7 @@ export interface SingleWork extends AuditList {
     //     description?: string
     // }>
     baseinfo: {
+        check_state?: number,
         name?: string,
         type?: number,
         state?: number,

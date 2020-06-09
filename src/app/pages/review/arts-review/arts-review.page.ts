@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 //import { ReviewDataService } from "../../data-service/review-data.service";
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -67,6 +67,7 @@ export class ArtsReviewPage implements OnInit {
     p: 1,
     s: 20,
   }
+  tableLoadingToggle: boolean = false;
   total = 1;
   form: FormGroup;
   currentMode: number = 0;
@@ -77,6 +78,7 @@ export class ArtsReviewPage implements OnInit {
 
   tableData$ = this.tableConfig$.pipe(
     withLatestFrom(this.config$), switchMap(([tableConfig, config]) => {
+      this.tableLoadingToggle = true;
       let tableConfigClone = { ...tableConfig };
       let configClone = { ...config };
       let httpConfig: httpModel = Object.assign(configClone, tableConfigClone);
@@ -90,6 +92,7 @@ export class ArtsReviewPage implements OnInit {
       ).pipe(tap(data => {
         console.log(data);
         this.total = data.count;
+        this.tableLoadingToggle = false;
       }), pluck('list'));
     })
   )
@@ -140,6 +143,10 @@ export class ArtsReviewPage implements OnInit {
   inspectDetails(workid) {
     this.router.navigate([workid], { relativeTo: this.route });
   }
+
+  // onlyDates(control: FormControl): { [s: string]: boolean } {
+  //   if ()
+  // }
 
   ngOnInit(): void {
     this.form = this.fb.group({

@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, ViewChild, ElementRef } from '@angula
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, auditTime } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+
 import * as moment from 'moment';
 import { SingleWork, AuditList } from '../../../core/model/singleArt.model';
 import { Observable } from 'rxjs';
@@ -50,6 +51,7 @@ export class ReviewDetailPage implements OnInit {
       }
     ],
     baseinfo: {
+      check_state: 1,
       name: '',
       type: 0,
       state: 0,
@@ -89,17 +91,12 @@ export class ReviewDetailPage implements OnInit {
 
 
 
-  updateReviewstatus(auditList: AuditList) {
-    console.log(auditList);
-    if (auditList.auditlist.length > 0) {
-      for (let i of auditList.auditlist) {
-        if (i.check_state === 1) {
-          this.auditType = AuditType.auditAccepted; return;
-        }
-      }
-      this.auditType = AuditType.auditDeclined;
-    } else {
-      this.auditType = AuditType.auditPending; return;
+  updateReviewstatus(artWorkInfo: SingleWork) {
+    console.log(artWorkInfo);
+    switch (artWorkInfo.baseinfo.check_state) {
+      case 0: this.auditType = AuditType.auditPending; break;
+      case 1: this.auditType = AuditType.auditAccepted; break;
+      case 2: this.auditType = AuditType.auditDeclined; break;
     }
   }
 
@@ -169,16 +166,14 @@ export class ReviewDetailPage implements OnInit {
   updatePage(data) {
     this.artWorkInfo = data;
     this.updateReviewstatus(this.artWorkInfo);
-    //this.updateImages(this.artWorkInfo.baseinfo.assets);
   }
-  // updateImages(images) {
-  //   return new Observable<string[]>((observer) => {
-  //     const { next, error } = observer;
-  //     next(images);
-  //   })
-  // }
+
   backTolist() {
     this.router.navigate([''], { relativeTo: this.route });
+  }
+
+  downloadImage(item) {
+    console.log(item);
   }
 
   ngOnInit(): void {
