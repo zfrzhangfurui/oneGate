@@ -25,11 +25,11 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { IconDefinition } from '@ant-design/icons-angular';
-import { AccountBookFill, AlertFill, AlertOutline, ArrowsAltOutline } from '@ant-design/icons-angular/icons';
+import { AccountBookFill, AlertFill, AlertOutline, SnippetsOutline, CopyrightOutline, FileImageOutline, FileTextOutline, TagsOutline, ArrowsAltOutline } from '@ant-design/icons-angular/icons';
 import { OnlyLoggedInUserGuard } from '../../core/guard/only-logged-in.guard';
 import { OnlyNumberDirective } from '../../shared/only-number.directive';
 const icons: IconDefinition[] = [,
-    AccountBookFill, AlertOutline, AlertFill, ArrowsAltOutline];
+    AccountBookFill, AlertOutline, AlertFill, SnippetsOutline, CopyrightOutline, FileImageOutline, FileTextOutline, TagsOutline, ArrowsAltOutline];
 @NgModule({
     declarations: [
         OnlyNumberDirective,

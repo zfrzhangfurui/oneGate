@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from "@angular/common/http";
 /********************************************************************/
 import { NzLayoutModule } from "ng-zorro-antd/layout";
@@ -22,10 +22,17 @@ import { OnlyLoggedInUserGuard } from '../../core/guard/only-logged-in.guard';
 /********************************************************************/
 import { CustomerPage } from './customer.page';
 import { CustomerAuthPage } from './customer-auth/customer-auth.page';
+import { CustomerAuthDetailPage } from './customer-auth-detail/customer-auth-detail.page';
+import { IconDefinition } from '@ant-design/icons-angular';
+import { AccountBookFill, AlertFill, AlertOutline, SnippetsOutline, CopyrightOutline, FileImageOutline, FileTextOutline, TagsOutline, ArrowsAltOutline } from '@ant-design/icons-angular/icons';
+const icons: IconDefinition[] = [,
+    AccountBookFill, AlertOutline, AlertFill, SnippetsOutline, CopyrightOutline, FileImageOutline, FileTextOutline, TagsOutline, ArrowsAltOutline];
 
 @NgModule({
     declarations: [
-
+        CustomerPage,
+        CustomerAuthPage,
+        CustomerAuthDetailPage
     ],
     imports: [
         CommonModule,
@@ -58,15 +65,16 @@ import { CustomerAuthPage } from './customer-auth/customer-auth.page';
                     // path: '',
                     component: CustomerAuthPage
                 },
-                // {
-                //     path: 'arts-review/:workid',
-                //     //   canActivate: [OnlyLoggedInUserGuard],
-                //     component: ReviewDetailPage
-                // }
+                {
+                    path: 'customer-auth/:uid',
+                    //   canActivate: [OnlyLoggedInUserGuard],
+                    component: CustomerAuthDetailPage
+                }
             ]
         }]),
 
         ReactiveFormsModule,
+        FormsModule
     ]
 })
 export class CustomerAuthModule { }

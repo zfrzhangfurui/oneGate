@@ -1,1 +1,73 @@
-<p>customer-auth-detail works!</p>
+<section>
+
+    <!-- modal -->
+    <nz-modal [(nzVisible)]="modal.modalToggle" [nzTitle]="modal.authTitle" [nzFooter]="modalFooter"
+        (nzOnCancel)="handleCancel()">
+        <div *ngIf="modal.modalAuthType === 'authAccept'">
+            <p>是否确认审核通过？<br />审核通过后无法撤回，请谨慎操作。</p>
+        </div>
+        <ng-template #modalFooter>
+            <div>
+                <button nz-button nzType="default" (click)="handleCancel()">返回</button>
+                <button nz-button nzType="primary">确认</button>
+            </div>
+        </ng-template>
+
+    </nz-modal>
+
+
+    <!-- modal -->
+
+
+
+    <div class="title">
+        <div class="title-left">
+            <button nz-button nzType="primary" (click)="backToList()"><i nz-icon nzType="left"></i>返回</button>
+            <p>审核管理-实名认证审核</p>
+        </div>
+        <div>
+            <div *ngIf="customerAuthType === 'authPending';else modalSwitch">
+                <button nz-button nzType="primary" (click)="showModal('modalAccept')">审核通过</button>
+                <button nz-button nzType="primary" (click)="showModal('modalPending')">审核拒绝</button>
+            </div>
+
+            <ng-template #modalSwitch>
+                <button nz-button nzType="primary" (click)="showModal('modalReconsider')">重新通过</button>
+            </ng-template>
+        </div>
+    </div>
+    <div class="information">
+        <div class="title">基础信息</div>
+        <div class="content">
+
+            <nz-descriptions [nzColumn]="3" nzLayout="vertical">
+                <nz-descriptions-item nzTitle="用户名称">dfdsf</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="用户ID">sdfsdf</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="申请时间">sdfdsf</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="真实姓名">真实姓名</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="身份证号">123123213</nz-descriptions-item>
+            </nz-descriptions>
+
+        </div>
+    </div>
+
+
+    <div class="identify">
+        <div class="title">身份证照片</div>
+        <div class="content">
+            <div class="content-item">
+                <p>手持身份证照片</p>
+                <img class="" />
+            </div>
+            <div class="content-item">
+                <p>身份证正面照片</p>
+                <img />
+            </div>
+            <div class="content-item">
+                <p>身份证反面照片</p>
+                <img />
+            </div>
+        </div>
+    </div>
+
+</section>

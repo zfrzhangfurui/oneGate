@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, Output, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, auditTime } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
-
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import * as moment from 'moment';
+import { saveAs } from 'file-saver';
 import { SingleWork, AuditList } from '../../../core/model/singleArt.model';
 import { Observable } from 'rxjs';
 enum modalMode {
@@ -170,10 +170,6 @@ export class ReviewDetailPage implements OnInit {
 
   backTolist() {
     this.router.navigate([''], { relativeTo: this.route });
-  }
-
-  downloadImage(item) {
-    console.log(item);
   }
 
   ngOnInit(): void {

@@ -21,16 +21,18 @@
                     <div class="menu-searchbar-div" nz-col nzSpan="3">
                         <label>作品ID：</label>
 
-                        <input OnlyNumber="true" class="review__menu-searchbar-item_input" placeholder="请输入"
+                        <input nz-input OnlyNumber="true" class="review__menu-searchbar-item_input" placeholder="请输入"
                             formControlName="w" />
                     </div>
                     <div class="menu-searchbar-div" nz-col nzSpan="3">
                         <label>作品名称：</label>
-                        <input class="review__menu-searchbar-item_input" placeholder="请输入" formControlName="n" />
+                        <input nz-input class="review__menu-searchbar-item_input" placeholder="请输入"
+                            formControlName="n" />
                     </div>
                     <div class="menu-searchbar-div" nz-col nzSpan="3">
                         <label>提交用户：</label>
-                        <input class="review__menu-searchbar-item_input" placeholder="请输入" formControlName="un" />
+                        <input nz-input class="review__menu-searchbar-item_input" placeholder="请输入"
+                            formControlName="un" />
                     </div>
                     <div class="menu-searchbar-div" nz-col nzSpan="6">
                         <div>
@@ -110,7 +112,8 @@
                     </td>
                     <td>{{ data.type }}</td>
                     <td>{{ data.type }}</td>
-                    <td><a>下载 {{ data.workid }}</a></td>
+                    <!-- <td><a (click)="download(data.asset_file)">下载 {{ data.workid }}</a></td> -->
+                    <td><a [attr.href]="data.asset_file[0]">下载 {{ data.workid }}</a></td>
                     <td (click)="inspectDetails(data.workid)"><a>查看详情</a></td>
                 </tr>
             </tbody>

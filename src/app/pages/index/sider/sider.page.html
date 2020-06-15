@@ -1,10 +1,12 @@
 <ul nz-menu nzMode="inline">
     <li nz-submenu nzTitle="审核管理" nzOpen>
         <ul>
-            <li nz-menu-item nzTitle="作品审核" [routerLink]="['/index/arts-review']" routerLinkActive="router-link-active">
+            <li nz-menu-item nzTitle="作品审核" [routerLink]="['/index/review/arts-review']"
+                routerLinkActive="router-link-active">
                 作品审核
             </li>
-            <li nz-menu-item nzTitle="实名认证审核" [routerLink]="['/passport/login']" routerLinkActive="router-link-active">
+            <li nz-menu-item nzTitle="实名认证审核" [routerLink]="['/index/customer/customer-auth']"
+                routerLinkActive="router-link-active">
                 实名认证审核
             </li>
             <li nz-menu-item nzTitle="身份审核">身份审核

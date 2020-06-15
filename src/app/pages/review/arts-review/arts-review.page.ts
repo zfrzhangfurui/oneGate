@@ -143,10 +143,13 @@ export class ArtsReviewPage implements OnInit {
   inspectDetails(workid) {
     this.router.navigate([workid], { relativeTo: this.route });
   }
-
-  // onlyDates(control: FormControl): { [s: string]: boolean } {
-  //   if ()
-  // }
+  download(fileRoute) {
+    console.log(fileRoute);
+    let j = document.createElement('a');
+    j.href = fileRoute[0];
+    j.setAttribute("download", 1 + '.jpg');
+    console.log(j);
+  }
 
   ngOnInit(): void {
     this.form = this.fb.group({
