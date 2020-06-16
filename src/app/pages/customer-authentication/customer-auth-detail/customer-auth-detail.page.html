@@ -1,4 +1,4 @@
-<section>
+<section *ngIf="content$ | async; let content">
 
     <!-- modal -->
     <nz-modal [(nzVisible)]="modal.modalToggle" [nzTitle]="modal.authTitle" [nzFooter]="modalFooter"
@@ -6,10 +6,16 @@
         <div *ngIf="modal.modalAuthType === 'authAccept'">
             <p>是否确认审核通过？<br />审核通过后无法撤回，请谨慎操作。</p>
         </div>
+        <div *ngIf="modal.modalAuthType === 'authDecline'">
+            <textarea class="modalDeclineInput" #declineInput></textarea>
+        </div>
         <ng-template #modalFooter>
             <div>
                 <button nz-button nzType="default" (click)="handleCancel()">返回</button>
-                <button nz-button nzType="primary">确认</button>
+                <button *ngIf="modal.modalAuthType === 'authAccept'" nz-button nzType="primary"
+                    (click)="handleConfirm('confirm')">确认</button>
+                <button *ngIf="modal.modalAuthType === 'authDecline'" nz-button nzType="primary"
+                    (click)="handleConfirm('decline')">确认</button>
             </div>
         </ng-template>
 
@@ -26,14 +32,14 @@
             <p>审核管理-实名认证审核</p>
         </div>
         <div>
-            <div *ngIf="customerAuthType === 'authPending';else modalSwitch">
+            <div *ngIf="content.result === 1">
                 <button nz-button nzType="primary" (click)="showModal('modalAccept')">审核通过</button>
-                <button nz-button nzType="primary" (click)="showModal('modalPending')">审核拒绝</button>
+                <button nz-button nzType="primary" (click)="showModal('modalDecline')">审核拒绝</button>
             </div>
 
-            <ng-template #modalSwitch>
+            <div *ngIf="content.result === 2">
                 <button nz-button nzType="primary" (click)="showModal('modalReconsider')">重新通过</button>
-            </ng-template>
+            </div>
         </div>
     </div>
     <div class="information">
@@ -41,11 +47,14 @@
         <div class="content">
 
             <nz-descriptions [nzColumn]="3" nzLayout="vertical">
-                <nz-descriptions-item nzTitle="用户名称">dfdsf</nz-descriptions-item>
-                <nz-descriptions-item nzTitle="用户ID">sdfsdf</nz-descriptions-item>
-                <nz-descriptions-item nzTitle="申请时间">sdfdsf</nz-descriptions-item>
-                <nz-descriptions-item nzTitle="真实姓名">真实姓名</nz-descriptions-item>
-                <nz-descriptions-item nzTitle="身份证号">123123213</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="用户名称">
+                    <p>{{content.nickname}}</p>
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="用户ID">{{content.uid}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="申请时间">{{ moment(content.start_time).format('YYYY-MM-DD')}}
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="真实姓名">{{content.real_name}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="身份证号">{{content.card_no}}</nz-descriptions-item>
             </nz-descriptions>
 
         </div>
@@ -57,15 +66,22 @@
         <div class="content">
             <div class="content-item">
                 <p>手持身份证照片</p>
-                <img class="" />
+                <div>
+                    <img src='{{content.face}}' />
+                </div>
+
             </div>
             <div class="content-item">
                 <p>身份证正面照片</p>
-                <img />
+                <div>
+                    <img src='{{content.front}}' />
+                </div>
             </div>
             <div class="content-item">
                 <p>身份证反面照片</p>
-                <img />
+                <div>
+                    <img src='{{content.back}}' />
+                </div>
             </div>
         </div>
     </div>

@@ -1,0 +1,41 @@
+p{
+    padding:0;
+    margin: 0;
+}
+
+section{
+    padding:10px 20px;
+    padding-bottom: 30px;
+    &>.title{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding:20px 20px;
+        &>.title-left{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        &>.title-left p{
+            padding-left: 20px;
+        }
+    }
+
+    &>.information{
+        padding-top: 10px;
+        border: 1px solid rgb(192, 189, 189);
+        margin-top: 20px;
+        border-radius: 3px;
+        &>.title{
+            padding: 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgb(192, 189, 189);
+            font-size: 16px;
+        }
+        &>.content{
+            padding:20px 20px 4px 30px;
+        }
+    }
+}

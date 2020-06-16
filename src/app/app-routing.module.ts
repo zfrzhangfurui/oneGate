@@ -9,6 +9,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'review', pathMatch: 'full' },
       { path: 'review', loadChildren: () => import('./pages/review/review.module').then(m => m.ReviewModule) },
       { path: 'customer', loadChildren: () => import('./pages/customer-authentication/customer-auth.module').then(m => m.CustomerAuthModule) },
+      { path: 'user', loadChildren: () => import('./pages/user/user.module').then(m => m.UserModule) },
     ]
   },
   { path: 'passport', loadChildren: () => import('./pages/passport/passport.module').then(m => m.PassportModule) },

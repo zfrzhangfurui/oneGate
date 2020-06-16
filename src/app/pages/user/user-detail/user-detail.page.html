@@ -1,0 +1,88 @@
+<section>
+    <div class="title">
+        <div class="title-left">
+            <button nz-button nzType="primary"><i nz-icon nzType="left"></i>返回</button>
+            <p>用户管理-用户列表</p>
+        </div>
+        <div>
+            <div *ngIf="status === 0">
+                <button nz-button nzType="danger">封禁用户</button>
+            </div>
+
+            <div *ngIf="status === 1">
+                <button nz-button nzType="primary">解封用户</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="information">
+        <div class="title">基础信息</div>
+        <div class="content">
+
+            <nz-descriptions [nzColumn]="4" nzLayout="vertical">
+                <nz-descriptions-item nzTitle="用户名称"></nz-descriptions-item>
+                <nz-descriptions-item nzTitle="用户ID"></nz-descriptions-item>
+                <nz-descriptions-item nzTitle="注册时间"></nz-descriptions-item>
+                <nz-descriptions-item nzTitle="绑定邮箱"></nz-descriptions-item>
+                <nz-descriptions-item nzTitle="绑定手机"></nz-descriptions-item>
+                <nz-descriptions-item nzTitle="支付密码"></nz-descriptions-item>
+                <nz-descriptions-item nzTitle="实名认证"></nz-descriptions-item>
+                <nz-descriptions-item nzTitle="钱包余额"></nz-descriptions-item>
+            </nz-descriptions>
+
+        </div>
+    </div>
+
+
+    <div class="information">
+        <div class="title">个人信息</div>
+        <div class="content">
+
+            <nz-descriptions [nzColumn]="4" nzLayout="vertical">
+                <nz-descriptions-item nzTitle="用户头像">
+                    <div style="width: 100px;height: 100px;border-radius: 50%;background-color: blue;"></div>
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="个人主页背景图片">
+                    <div style="width: 200px;height: 100px;background-color: blue;"></div>
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="个性签名">
+                    <p>sdfsdfsdfsdfdsfsfsdfsdfsdfsdf</p>
+                </nz-descriptions-item>
+            </nz-descriptions>
+
+        </div>
+    </div>
+
+    <div class="information">
+        <div class="title">账号状态</div>
+        <div class="content">
+
+            <nz-descriptions [nzColumn]="4" nzLayout="vertical">
+                <nz-descriptions-item nzTitle="账号状态"></nz-descriptions-item>
+                <nz-descriptions-item nzTitle="封禁时长"></nz-descriptions-item>
+                <nz-descriptions-item nzTitle="封禁日期"></nz-descriptions-item>
+                <nz-descriptions-item nzTitle="解除封禁日期"></nz-descriptions-item>
+                <nz-descriptions-item nzTitle="封禁理由"></nz-descriptions-item>
+                <nz-descriptions-item nzTitle="封禁记录"></nz-descriptions-item>
+            </nz-descriptions>
+
+        </div>
+    </div>
+
+
+    <div class="information">
+        <div class="title">实名认证信息</div>
+        <div class="content">
+
+            <nz-descriptions [nzColumn]="2" nzLayout="vertical">
+                <nz-descriptions-item nzTitle="真实姓名"></nz-descriptions-item>
+                <nz-descriptions-item nzTitle="身份证号"></nz-descriptions-item>
+            </nz-descriptions>
+            <nz-descriptions [nzColumn]="3" nzLayout="vertical">
+                <nz-descriptions-item nzTitle="手持身份证照片"></nz-descriptions-item>
+                <nz-descriptions-item nzTitle="身份证正面照片"></nz-descriptions-item>
+                <nz-descriptions-item nzTitle="身份证反面照片"></nz-descriptions-item>
+            </nz-descriptions>
+        </div>
+    </div>
+</section>

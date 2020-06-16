@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 import { ReviewModule } from './pages/review/review.module';
 import { PassportModule } from './pages/passport/passport.module';
 import { CustomerAuthModule } from './pages/customer-authentication/customer-auth.module';
+import { UserModule } from './pages/user/user.module';
 import { CoreModule } from './core/core.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -35,6 +36,7 @@ registerLocaleData(zh);
     ReviewModule,
     CustomerAuthModule,
     PassportModule,
+    UserModule,
     NzLayoutModule,
     NzMenuModule,
     CoreModule.forRoot({
@@ -45,7 +47,6 @@ registerLocaleData(zh);
       // executionStrategy: NoopNgxsExecutionStrategy
     }),
     FormsModule,
-    // HttpClientModule,
     BrowserAnimationsModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: zh_CN }],
