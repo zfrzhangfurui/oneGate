@@ -10,6 +10,9 @@ const routes: Routes = [
       { path: 'review', loadChildren: () => import('./pages/review/review.module').then(m => m.ReviewModule) },
       { path: 'customer', loadChildren: () => import('./pages/customer-authentication/customer-auth.module').then(m => m.CustomerAuthModule) },
       { path: 'user', loadChildren: () => import('./pages/user/user.module').then(m => m.UserModule) },
+      { path: 'backend', loadChildren: () => import('./pages/backend/backend.module').then(m => m.BackEndModule) },
+      { path: 'goods', loadChildren: () => import('./pages/goods/goods.module').then(m => m.GoodsModule) },
+      { path: 'revenue', loadChildren: () => import('./pages/revenue/revenue.module').then(m => m.RevenueModule) },
     ]
   },
   { path: 'passport', loadChildren: () => import('./pages/passport/passport.module').then(m => m.PassportModule) },

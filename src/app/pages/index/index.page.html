@@ -1,11 +1,14 @@
 <nz-layout>
-    <nz-header style="background-color: #5584FF;"></nz-header>
+    <nz-header style="background-color: #5584FF;height: 50px;"></nz-header>
     <nz-layout>
-        <nz-sider nzWidth="300px" nzTheme="light">
+        <nz-sider nzWidth="200px" nzTheme="light">
             <app-sider></app-sider>
         </nz-sider>
         <nz-layout class="inner-layout">
-            <router-outlet></router-outlet>
+            <nz-content>
+                <router-outlet></router-outlet>
+            </nz-content>
+
         </nz-layout>
     </nz-layout>
 </nz-layout>

@@ -9,26 +9,77 @@
                 routerLinkActive="router-link-active">
                 实名认证审核
             </li>
-            <li nz-menu-item nzTitle="身份审核">身份审核
+
+        </ul>
+    </li>
+    <li nz-submenu nzTitle="内容管理" nzOpen>
+        <ul>
+            <li nz-menu-item nzTitle="用户列表" [routerLink]="['/index/goods','product']"
+                routerLinkActive="router-link-active">
+                已发布作品
+            </li>
+
+            <li nz-menu-item nzTitle="用户列表" [routerLink]="['/index/goods','deleteArts']"
+                routerLinkActive="router-link-active">
+                已删除作品
+            </li>
+            <li nz-menu-item nzTitle="用户列表" [routerLink]="['/index/goods','onStage']"
+                routerLinkActive="router-link-active">
+                已上架作品
+            </li>
+            <li nz-menu-item nzTitle="用户列表" [routerLink]="['/index/goods','forSale']"
+                routerLinkActive="router-link-active">
+                已出售作品
+            </li>
+            <li nz-menu-item nzTitle="用户列表" [routerLink]="['/index/goods','deleteGoods']"
+                routerLinkActive="router-link-active">
+                已删除作品
             </li>
         </ul>
     </li>
-
+    <li nz-submenu nzTitle="财务管理" nzOpen>
+        <ul>
+            <li nz-menu-item nzTitle="用户列表" [routerLink]="['/index/revenue/orderlist']"
+                routerLinkActive="router-link-active">
+                订单列表
+            </li>
+            <li nz-menu-item nzTitle="用户列表" [routerLink]="['/index/revenue/transrecords']"
+                routerLinkActive="router-link-active">
+                交易记录
+            </li>
+            <li nz-menu-item nzTitle="用户列表" [routerLink]="['/index/revenue/rechargerecords']"
+                routerLinkActive="router-link-active">
+                充值记录
+            </li>
+            <li nz-menu-item nzTitle="用户列表" [routerLink]="['/index/revenue/withdrawrecords']"
+                routerLinkActive="router-link-active">
+                提现记录
+            </li>
+        </ul>
+    </li>
     <li nz-submenu nzTitle="用户管理" nzOpen>
         <ul>
-            <li nz-menu-item nzTitle="用户列表" [routerLink]="['/index/user']" routerLinkActive="router-link-active">
+            <li nz-menu-item nzTitle="用户列表" [routerLink]="['/index/user/userlist']"
+                routerLinkActive="router-link-active">
                 用户列表
             </li>
-            <li nz-menu-item nzTitle="身份审核">身份审核
+            <li nz-menu-item nzTitle="用户列表" [routerLink]="['/index/user/reportlist']"
+                routerLinkActive="router-link-active">
+                举报记录
             </li>
+            <li nz-menu-item nzTitle="用户列表" [routerLink]="['/index/user/violationlist']"
+                routerLinkActive="router-link-active">
+                违规记录
+            </li>
+
         </ul>
     </li>
 
-    <li nz-submenu nzTitle="Navigation Three">
+    <li nz-submenu nzTitle="后台管理" nzOpen>
         <ul>
-            <li nz-menu-item>Option 11</li>
-            <li nz-menu-item>Option 12</li>
-            <li nz-menu-item>Option 13</li>
+            <li nz-menu-item [routerLink]="['/index/backend/admin']" routerLinkActive="router-link-active">角色权限</li>
+            <li nz-menu-item [routerLink]="['/index/backend/admin-list']" routerLinkActive="router-link-active">用户管理
+            </li>
         </ul>
     </li>
 </ul>

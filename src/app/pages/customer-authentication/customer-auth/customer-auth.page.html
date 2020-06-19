@@ -18,15 +18,15 @@
                     <div class="menu-searchbar-div first-searchbar" nz-col nzSpan="3">
                         <label>用户ID：</label>
 
-                        <input OnlyNumber="true" class="review__menu-searchbar-item_input" placeholder="请输入"
+                        <input nz-input OnlyNumber="true" class="review__menu-searchbar-item_input" placeholder="请输入"
                             (keyup)="inputDisabledStrategy('uid')" formControlName="uid" />
                     </div>
                     <div class="menu-searchbar-div" nz-col nzSpan="3">
                         <label>用户名称：</label>
-                        <input class="review__menu-searchbar-item_input" placeholder="请输入" formControlName="name"
-                            (keyup)="inputDisabledStrategy('name')" />
+                        <input nz-input class="review__menu-searchbar-item_input" placeholder="请输入"
+                            formControlName="name" (keyup)="inputDisabledStrategy('name')" />
                     </div>
-                    <div class="menu-searchbar-div" nz-col nzSpan="6">
+                    <div class="menu-searchbar-div" nz-col nzSpan="6.5">
                         <div>
                             <label>申请时间</label>
                         </div>

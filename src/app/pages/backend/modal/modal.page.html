@@ -1,0 +1,48 @@
+<div [ngSwitch]="modalSwitch">
+
+
+
+
+
+
+
+    <div *ngSwitchCase="'ModalDeleteRole'">
+        <p>{{title}}</p>
+
+        是否确认删除：{{content.name}}
+    </div>
+
+
+
+
+
+
+
+
+    <div *ngSwitchCase="'ModalAddRole'">
+        <p>{{title}}</p>
+        <div><input placeholder="名称" /></div>
+        <div><input placeholder="角色" /></div>
+    </div>
+    <div *ngSwitchCase="'ModalEdit'">
+        <p>{{title}}</p>
+        <div><input placeholder="名称" /></div>
+        <div><input placeholder="角色" /></div>
+    </div>
+    <div *ngSwitchCase="'ModalEditPassword'">
+        <p>{{title}}</p>
+        <div><input placeholder="名称" /></div>
+        <div><input placeholder="角色" /></div>
+    </div>
+    <div *ngSwitchCase="'ModalDeleteMember'">
+        <p>{{title}}</p>
+        <div><input placeholder="名称" /></div>
+        <div><input placeholder="角色" /></div>
+    </div>
+    <div *ngSwitchCase="'ModalAddMember'">
+        <p>{{title}}</p>
+        <div><input placeholder="名称" /></div>
+        <div><input placeholder="角色" /></div>
+    </div>
+    <!-- <div *ngSwitchDefault>output2</div> -->
+</div>

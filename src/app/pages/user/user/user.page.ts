@@ -5,7 +5,7 @@ import { BehaviorSubject, fromEvent, Subject, of, Observable } from 'rxjs';
 import { switchMap, tap, throttleTime, pluck } from 'rxjs/operators';
 import * as moment from 'moment';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserData, UserList, UserRequest, TableConfig } from '../../../core/model/user.model';
+import { UserData, UserList, UserRequest, TableConfig } from '../../../core/model/user/user.model';
 
 
 
@@ -67,6 +67,18 @@ export class UserPage implements OnInit {
 
   search() {
     this.resetTable(1, 2);
+    this.tableConfigSubject$.next(
+      this.tableConfig
+    );
+  }
+  reset() {
+    this.resetTable(1, 2);
+    this.form.reset({
+      id: null,
+      nickname: null,
+      start_time: null,
+      end_time: null,
+    });
     this.tableConfigSubject$.next(
       this.tableConfig
     );

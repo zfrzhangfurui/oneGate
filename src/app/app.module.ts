@@ -9,6 +9,9 @@ import { ReviewModule } from './pages/review/review.module';
 import { PassportModule } from './pages/passport/passport.module';
 import { CustomerAuthModule } from './pages/customer-authentication/customer-auth.module';
 import { UserModule } from './pages/user/user.module';
+import { BackEndModule } from './pages/backend/backend.module';
+import { GoodsModule } from './pages/goods/goods.module';
+import { RevenueModule } from './pages/revenue/revenue.module';
 import { CoreModule } from './core/core.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -37,6 +40,9 @@ registerLocaleData(zh);
     CustomerAuthModule,
     PassportModule,
     UserModule,
+    BackEndModule,
+    GoodsModule,
+    RevenueModule,
     NzLayoutModule,
     NzMenuModule,
     CoreModule.forRoot({

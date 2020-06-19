@@ -24,13 +24,20 @@ import { IconDefinition } from '@ant-design/icons-angular';
 import { AccountBookFill, AlertFill, AlertOutline, SnippetsOutline, CopyrightOutline, FileImageOutline, FileTextOutline, TagsOutline, ArrowsAltOutline } from '@ant-design/icons-angular/icons';
 import { UserPage } from './user/user.page';
 import { UserDetailPage } from './user-detail/user-detail.page';
+import { ReactiveComponentModule } from '../../core/reactive/reactive-component.module';
+import { ViolationPage } from './violation/violation.page';
+import { ReportedPage } from './reported/reported.page';
+import { ReportedDetailPage } from './reported-detail/reported-detail.page';
 const icons: IconDefinition[] = [,
     AccountBookFill, AlertOutline, AlertFill, SnippetsOutline, CopyrightOutline, FileImageOutline, FileTextOutline, TagsOutline, ArrowsAltOutline];
 
 @NgModule({
     declarations: [
         UserPage,
-        UserDetailPage
+        UserDetailPage,
+        ViolationPage,
+        ReportedPage,
+        ReportedDetailPage
     ],
     imports: [
         CommonModule,
@@ -48,11 +55,15 @@ const icons: IconDefinition[] = [,
         NzDescriptionsModule,
         NzModalModule,
         NzMenuModule,
+        ReactiveComponentModule,
         RouterModule.forChild(
             [
-                { path: '', redirectTo: 'user', pathMatch: 'full' },
-                { path: 'user', component: UserPage },
-                { path: 'user/:uid', component: UserDetailPage }
+                { path: '', redirectTo: 'userlist', pathMatch: 'full' },
+                { path: 'userlist', component: UserPage },
+                { path: 'userlist/:uid', component: UserDetailPage },
+                { path: 'reportlist', component: ReportedPage },
+                { path: 'reportlist/:uid', component: ReportedDetailPage },
+                { path: 'violationlist', component: ViolationPage }
             ]
         ),
 
