@@ -35,15 +35,14 @@
                     <p class="title-p">编辑权限</p>
                     <div class="right-title-buttons">
                         <button nz-button nzType="primary" class="right-title-button">取消</button>
-                        <button nz-button nzType="primary" class="right-title-button">保存权限</button>
+                        <button nz-button nzType="primary" class="right-title-button"
+                            (click)="roleSetting()">保存权限</button>
                     </div>
 
                 </div>
-                <nz-tree [nzData]="nodes" nzCheckable nzMultiple [nzCheckedKeys]="defaultCheckedKeys"
-                    [nzExpandedKeys]="defaultExpandedKeys" [nzSelectedKeys]="defaultSelectedKeys"
-                    (nzClick)="nzEvent($event)" (nzExpandChange)="nzEvent($event)" (nzCheckBoxChange)="nzEvent($event)">
+                <nz-tree [nzData]="nodes" nzCheckable nzMultiple [nzCheckedKeys]="defaultKeys"
+                    (nzExpandChange)="nzEvent($event)" (nzCheckBoxChange)="nzEvent($event)">
                 </nz-tree>
-
             </div>
         </div>
     </section>

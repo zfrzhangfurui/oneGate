@@ -1,1 +1,143 @@
-<p>goods-detail works!</p>
+<main>
+
+    <nav>
+        <div class="nav-left">
+            <button nz-button nzType="primary">返回</button>
+            <p>内容管理-已发布商品</p>
+        </div>
+        <div class="nav-right">
+            <div class="right-button">
+                <button nz-button>违规删除</button>
+                <!-- <button nz-button>违规处理</button> -->
+            </div>
+            <ng-template>
+                <div>
+                    <button nz-button>撤销违规</button>
+                </div>
+            </ng-template>
+        </div>
+    </nav>
+    <section>
+        <div class="title">
+            <p>审核信息</p>
+        </div>
+        <div>
+            <nz-descriptions [nzColumn]="4" nzBordered nzLayout="vertical">
+                <nz-descriptions-item nzTitle="审核人">
+                    用户ABC
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="审核时间">
+                    用户ABC
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="审核结果">
+                    用户ABC
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="拒绝理由">
+                    用户ABC
+                </nz-descriptions-item>
+            </nz-descriptions>
+        </div>
+    </section>
+
+    <section>
+        <div class="title">
+            <p>基础信息</p>
+        </div>
+        <div>
+            <nz-descriptions [nzColumn]="4" nzBordered nzLayout="vertical">
+                <nz-descriptions-item nzTitle="作品名称">
+                    用户ABC
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="作品ID">
+                    用户ABC
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="发布用户">
+                    用户ABC
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="发布时间">
+                    用户ABC
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="作品分类">
+                    用户ABC
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="作品类型">
+                    用户ABC
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="出售价格">
+                    用户ABC
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="分享次数">
+                    用户ABC
+                </nz-descriptions-item>
+            </nz-descriptions>
+        </div>
+    </section>
+
+    <section>
+        <div class="title title-detail">
+            <p>详细信息</p>
+        </div>
+        <div class="detail">
+            <div class="intro">
+                <p class="intro-title">作品介绍</p>
+                <p>作品介绍非常长，可以写1000字的小作文。作品介绍非常长，作品介绍非常长，
+                    可以写1000字的小作文。作品介绍非常长，作品介绍非常长，
+                    可以写1000字的小作文。作品介绍非常长，作品介绍非常长，
+                    可以写1000字的小作文。作品介绍非常长,可以写1000字的小作文。作品介绍非常长,可以写1000字的小作文。作品介绍非常长
+                </p>
+            </div>
+
+            <div class="statistics">
+                <div>
+                    <p>点赞量</p>
+                    <p>123123123123</p>
+                </div>
+                <div>
+                    <p>评论量</p>
+                    <p>123123123123</p>
+                </div>
+                <div>
+                    <p>版权声明</p>
+                    <p>123123123123</p>
+                </div>
+            </div>
+            <div class="image">
+                <p class="image-title">上传图片</p>
+                <div class="image-content">
+                    <div>
+                        <img>
+                    </div>
+                    <div>
+                        <img>
+                    </div>
+                    <div>
+                        <img>
+                    </div>
+                    <div>
+                        <img>
+                    </div>
+                </div>
+            </div>
+            <div class="source-file">
+                <p class="file-title">源文件</p>
+                <div class="file">
+                    <a>123123123</a>
+                    <a>456456456</a>
+                    <a>123123123</a>
+                    <a>456456456</a>
+                    <a>123123123</a>
+                </div>
+            </div>
+            <div class="tag">
+                <p class="tag-title">标签</p>
+                <div>
+                    <nz-tag>sdfsdfdsfs</nz-tag>
+                    <nz-tag>sdfsdfdsfs</nz-tag>
+                    <nz-tag>sdfsdfdsfs</nz-tag>
+                    <nz-tag>sdfsdfdsfs</nz-tag>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</main>

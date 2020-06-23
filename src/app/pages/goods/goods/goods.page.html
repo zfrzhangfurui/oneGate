@@ -1,22 +1,26 @@
 <main>
     <section class="menu">
-        <div class="menu-title">用户管理-用户列表</div>
+        <div class="menu-title">内容管理-{{type}}</div>
         <div class="menu-searchbar">
             <form [formGroup]="form">
                 <div nz-row [nzGutter]="24" nzJustify="start">
 
                     <div class="menu-searchbar-div first-searchbar" nz-col nzSpan="3">
-                        <label>用户ID：</label>
+                        <label>作品ID：</label>
 
                         <input nz-input OnlyNumber="true" class="review__menu-searchbar-item_input" placeholder="请输入" />
                     </div>
                     <div class="menu-searchbar-div" nz-col nzSpan="3">
-                        <label>用户名称：</label>
+                        <label>作品名称：</label>
+                        <input nz-input class="review__menu-searchbar-item_input" placeholder="请输入" />
+                    </div>
+                    <div class="menu-searchbar-div" nz-col nzSpan="3">
+                        <label>发布用户：</label>
                         <input nz-input class="review__menu-searchbar-item_input" placeholder="请输入" />
                     </div>
                     <div class="menu-searchbar-div" nz-col nzSpan="6">
                         <div>
-                            <label>注册时间：</label>
+                            <label>发布时间：</label>
                         </div>
                         <div>
                             <nz-date-picker class="date-input" nzFormat="yyyy/MM/dd" nzPlaceHolder="Select Time">
@@ -25,6 +29,14 @@
                             <nz-date-picker class="date-input" nzFormat="yyyy/MM/dd" nzPlaceHolder="Select Time">
                             </nz-date-picker>
                         </div>
+                    </div>
+                    <div class="menu-searchbar-div" nz-col nzSpan="3">
+                        <label>作品分类：</label>
+                        <input nz-input class="review__menu-searchbar-item_input" placeholder="请输入" />
+                    </div>
+                    <div class="menu-searchbar-div" nz-col nzSpan="3">
+                        <label>作品类型：</label>
+                        <input nz-input class="review__menu-searchbar-item_input" placeholder="请输入" />
                     </div>
                 </div>
             </form>

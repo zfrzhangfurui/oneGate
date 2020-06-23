@@ -3,43 +3,12 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { ArtsReviewModel, navConfigModel, tableConfigModel, httpModel } from '../../../core/model/arts-review/review-list.model';
+import { BehaviorSubject, Subject, of } from 'rxjs';
 import { switchMap, tap, pluck, catchError } from 'rxjs/operators';
 import { NzTableQueryParams } from 'ng-zorro-antd/table/public-api';
 import { Router, ActivatedRoute } from '@angular/router';
 import { withLatestFrom, map } from "rxjs/operators";
-interface ArtsReviewModel {
-  count: number,
-  list: []
-}
-interface navConfigModel {
-  w: string,
-  n: string,
-  un: string,
-  st: string,
-  et: string,
-  t: number,
-  ta: number,
-  c: number
-}
-//p:页码，s:页大小
-interface tableConfigModel {
-  p: number,
-  s: number,
-}
-
-interface httpModel {
-  w: string,
-  n: string,
-  un: string,
-  st: string,
-  et: string,
-  t: number,
-  ta: number,
-  p: number,
-  s: number,
-  c: number
-}
 
 const defaultTablePageConfig: tableConfigModel = {
   p: 1,
@@ -62,6 +31,7 @@ const defaultConfig: navConfigModel = {
   styleUrls: ["./arts-review.page.less"],
 })
 export class ArtsReviewPage implements OnInit {
+  error: string;
   //this will be current page 
   tablePageConfig: tableConfigModel = {
     p: 1,
@@ -76,6 +46,8 @@ export class ArtsReviewPage implements OnInit {
   tableConfig$: Subject<tableConfigModel> = new Subject();
   config$: BehaviorSubject<navConfigModel> = new BehaviorSubject(defaultConfig);
 
+
+  // tableData$ = of([1, 2, 3, 4, 5, 6, 7]);
   tableData$ = this.tableConfig$.pipe(
     withLatestFrom(this.config$), switchMap(([tableConfig, config]) => {
       this.tableLoadingToggle = true;
@@ -87,13 +59,18 @@ export class ArtsReviewPage implements OnInit {
       httpConfig.st === null ? httpConfig.st = '1970/01/01' : httpConfig.st = moment(httpConfig.st).format('YYYY/MM/DD');
       httpConfig.et === null ? httpConfig.et = moment(Date()).format('YYYY/MM/DD') : httpConfig.et = moment(httpConfig.et).format('YYYY/MM/DD');
       console.log(httpConfig);
-      return this.http.get<ArtsReviewModel>(
-        `/work/get_work_list?w=${httpConfig.w}&p=${httpConfig.p}&s=${httpConfig.s}&n=${httpConfig.n}&un=${httpConfig.un}&st=${httpConfig.st}&et=${httpConfig.et}&t=${httpConfig.t}&ta=${httpConfig.ta}&ss=-1&c=${httpConfig.c}&m=0`
-      ).pipe(tap(data => {
-        console.log(data);
-        this.total = data.count;
-        this.tableLoadingToggle = false;
-      }), pluck('list'));
+      // return this.http.get<ArtsReviewModel>(
+      //   `/work/get_work_list?w=${httpConfig.w}&p=${httpConfig.p}&s=${httpConfig.s}&n=${httpConfig.n}&un=${httpConfig.un}&st=${httpConfig.st}&et=${httpConfig.et}&t=${httpConfig.t}&ta=${httpConfig.ta}&ss=-1&c=${httpConfig.c}&m=0`
+      // ).pipe(tap(data => {
+      //   console.log(data);
+      //   this.total = data.count;
+      //   this.tableLoadingToggle = false;
+      // },
+
+      //   error => {
+      //     console.log(error);
+      //   }), pluck('list'));
+      return of([1, 2, 3, 4, 5, 6])
     })
   )
 
@@ -164,3 +141,6 @@ export class ArtsReviewPage implements OnInit {
     })
   }
 }
+
+
+//[nzData]="tableData$|async"

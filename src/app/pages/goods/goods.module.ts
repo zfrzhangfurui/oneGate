@@ -18,6 +18,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzTagModule } from 'ng-zorro-antd/tag';
 import { OnlyLoggedInUserGuard } from '../../core/guard/only-logged-in.guard';
 /********************************************************************/
 import { GoodsPage } from './goods/goods.page';
@@ -49,6 +50,7 @@ const icons: IconDefinition[] = [,
         NzDescriptionsModule,
         NzModalModule,
         NzMenuModule,
+        NzTagModule,
         ReactiveComponentModule,
         RouterModule.forChild(
             [

@@ -34,61 +34,87 @@ export class AdminPage implements OnInit {
     // return this.http.get<>().........
   }))
 
-  defaultCheckedKeys = ['0-0-0'];
-  defaultSelectedKeys = ['0-0-0'];
-  defaultExpandedKeys = ['0-0', '0-0-0', '0-0-1'];
-
+  //defaultKeys = ['0'];
+  defaultKeys = [];
+  Keys = [];
   nodes = [
     {
-      title: '0-0',
-      key: '0-0',
+      title: '1. 审核管理',
+      key: '0',
       expanded: true,
+      selectable: false,
       children: [
         {
-          title: '0-0-0',
-          key: '0-0-0',
-          children: [
-            { title: '0-0-0-0', key: '0-0-0-0', isLeaf: true },
-            { title: '0-0-0-1', key: '0-0-0-1', isLeaf: true },
-            { title: '0-0-0-2', key: '0-0-0-2', isLeaf: true }
-          ]
+          title: '1.1 作品审核',
+          key: '0-0',
+          isLeaf: true,
+          selectable: false,
         },
         {
-          title: '0-0-1',
-          key: '0-0-1',
-          children: [
-            { title: '0-0-1-0', key: '0-0-1-0', isLeaf: true },
-            { title: '0-0-1-1', key: '0-0-1-1', isLeaf: true },
-            { title: '0-0-1-2', key: '0-0-1-2', isLeaf: true }
-          ]
+          title: '1.2 实名认证审核',
+          key: '0-1',
+          isLeaf: true,
+          selectable: false,
         },
-        {
-          title: '0-0-2',
-          key: '0-0-2',
-          isLeaf: true
-        }
       ]
     },
     {
-      title: '0-1',
-      key: '0-1',
+      title: '2. 内容管理',
+      key: '1',
+      expanded: true,
+      selectable: false,
       children: [
-        { title: '0-1-0-0', key: '0-1-0-0', isLeaf: true },
-        { title: '0-1-0-1', key: '0-1-0-1', isLeaf: true },
-        { title: '0-1-0-2', key: '0-1-0-2', isLeaf: true }
+        { title: '2.1 已发布作品', key: '1-0', isLeaf: true, selectable: false },
+        { title: '2.2 已删除作品', key: '1-1', isLeaf: true, selectable: false },
+        { title: '2.3 已上架商品', key: '1-2', isLeaf: true, selectable: false },
+        { title: '2.4 已出售商品', key: '1-3', isLeaf: true, selectable: false },
+        { title: '2.5 已删除商品', key: '1-4', isLeaf: true, selectable: false },
+        { title: '2.6 合集列表', key: '1-5', isLeaf: true, selectable: false }
       ]
     },
     {
-      title: '0-2',
-      key: '0-2',
-      isLeaf: true
+      title: '3. 财务管理',
+      key: '2',
+      expanded: true,
+      selectable: false,
+      children: [
+        { title: '3.1 订单列表', key: '2-0', isLeaf: true, selectable: false },
+        { title: '3.2 交易记录', key: '2-1', isLeaf: true, selectable: false },
+        { title: '3.3 充值记录', key: '2-2', isLeaf: true, selectable: false },
+        { title: '3.4 提现记录', key: '2-3', isLeaf: true, selectable: false },
+      ]
+    },
+    {
+      title: '4. 用户管理',
+      key: '3',
+      expanded: true,
+      selectable: false,
+      children: [
+        { title: '4.1 用户列表', key: '3-0', isLeaf: true, selectable: false },
+        { title: '4.2 举报记录', key: '3-1', isLeaf: true, selectable: false },
+        { title: '4.3 违规记录', key: '3-2', isLeaf: true, selectable: false },
+      ]
+    },
+    {
+      title: '5. 后台管理',
+      key: '4',
+      expanded: true,
+      selectable: false,
+      children: [
+        { title: '5.1 角色权限', key: '4-0', isLeaf: true, selectable: false },
+        { title: '5.2 用户管理', key: '4-1', isLeaf: true, selectable: false },
+      ]
     }
   ];
 
   nzEvent(event: NzFormatEmitEvent): void {
     console.log(event);
+    console.log(this.defaultKeys);
+    this.Keys = event.keys;
   }
+  roleSetting() {
 
+  }
   /*****************************modal*********************************************/
 
   createComponentModal(modalType, content): void {

@@ -24,7 +24,9 @@ import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { IconDefinition } from '@ant-design/icons-angular';
+import { ReactiveComponentModule } from '../../core/reactive/reactive-component.module';
 import { AccountBookFill, AlertFill, AlertOutline, SnippetsOutline, CopyrightOutline, FileImageOutline, FileTextOutline, TagsOutline, ArrowsAltOutline } from '@ant-design/icons-angular/icons';
 import { OnlyLoggedInUserGuard } from '../../core/guard/only-logged-in.guard';
 import { OnlyNumberDirective } from '../../shared/only-number.directive';
@@ -56,6 +58,8 @@ const icons: IconDefinition[] = [,
         NzModalModule,
         NzMenuModule,
         NzTagModule,
+        NzAlertModule,
+        ReactiveComponentModule,
         RouterModule.forChild([{
             path: '',
             component: ReviewPage,

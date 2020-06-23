@@ -23,6 +23,5 @@ import { from, of, Observable, ObservableInput } from 'rxjs';
 export function toObservableValue<T>(
   p: ObservableInput<T> | undefined | null
 ): ObservableInput<T | undefined | null> {
-  console.log(p);
   return p == null ? of(p) : from(p);
 }

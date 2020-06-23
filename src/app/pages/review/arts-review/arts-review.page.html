@@ -1,6 +1,10 @@
 <main>
-    <section class="review__menu">
-        <div class="review__menu-title">审核管理-作品审核</div>
+    <section class="review__menu" *ngrxLet="tableData$; let data">
+        <div class="review__menu-title">
+            <p>审核管理-作品审核</p>
+            <nz-alert nzType="error" [nzMessage]="data" nzShowIcon></nz-alert>
+        </div>
+
         <form [formGroup]="form">
             <div class="review__menu-nav">
                 <nz-radio-group formControlName="c" nzButtonStyle="solid">
@@ -74,8 +78,8 @@
                         <i nz-icon nzType="search"></i>搜索
                     </button>
                     <!-- <button nz-button nzType="primary" role="button" (click)="onSubmit()">
-                        <i nz-icon nzType="search"></i>搜索
-                    </button> -->
+                            <i nz-icon nzType="search"></i>搜索
+                        </button> -->
                     <button nz-button nzType="default" role="button" (click)="onReset()">
                         <i nz-icon nzType="close"></i>重置
                     </button>
@@ -87,7 +91,7 @@
         </form>
     </section>
     <section class="review__table-section">
-        <nz-table class="table" #basicTable [nzData]="tableData$|async" [nzFrontPagination]="false" [nzTotal]="total"
+        <nz-table class="table" #basicTable [nzData]="data" [nzFrontPagination]="false" [nzTotal]="total"
             [(nzPageSize)]="tablePageConfig.s" [(nzPageIndex)]="tablePageConfig.p" [nzLoading]="tableLoadingToggle"
             (nzQueryParams)="onQueryParamsChange($event)" [nzShowQuickJumper]="true">
             <thead>
