@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 import { ArtsReviewModel, navConfigModel, tableConfigModel, httpModel } from '../../../core/model/arts-review/review-list.model';
-import { BehaviorSubject, Subject, of } from 'rxjs';
+import { BehaviorSubject, Subject, of, from } from 'rxjs';
 import { switchMap, tap, pluck, catchError } from 'rxjs/operators';
 import { NzTableQueryParams } from 'ng-zorro-antd/table/public-api';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -59,18 +59,19 @@ export class ArtsReviewPage implements OnInit {
       httpConfig.st === null ? httpConfig.st = '1970/01/01' : httpConfig.st = moment(httpConfig.st).format('YYYY/MM/DD');
       httpConfig.et === null ? httpConfig.et = moment(Date()).format('YYYY/MM/DD') : httpConfig.et = moment(httpConfig.et).format('YYYY/MM/DD');
       console.log(httpConfig);
-      // return this.http.get<ArtsReviewModel>(
-      //   `/work/get_work_list?w=${httpConfig.w}&p=${httpConfig.p}&s=${httpConfig.s}&n=${httpConfig.n}&un=${httpConfig.un}&st=${httpConfig.st}&et=${httpConfig.et}&t=${httpConfig.t}&ta=${httpConfig.ta}&ss=-1&c=${httpConfig.c}&m=0`
-      // ).pipe(tap(data => {
-      //   console.log(data);
-      //   this.total = data.count;
-      //   this.tableLoadingToggle = false;
-      // },
+      return this.http.get<ArtsReviewModel>(
+        `/work/get_work_list?w=${httpConfig.w}&p=${httpConfig.p}&s=${httpConfig.s}&n=${httpConfig.n}&un=${httpConfig.un}&st=${httpConfig.st}&et=${httpConfig.et}&t=${httpConfig.t}&ta=${httpConfig.ta}&ss=-1&c=${httpConfig.c}&m=0`
+      ).pipe(tap(data => {
+        console.log(data);
+        this.total = data.count;
+        this.tableLoadingToggle = false;
+      },
 
-      //   error => {
-      //     console.log(error);
-      //   }), pluck('list'));
-      return of([1, 2, 3, 4, 5, 6])
+        error => {
+          this.error = error.status;
+          console.log(error);
+        }), pluck('list'));
+
     })
   )
 
@@ -115,6 +116,7 @@ export class ArtsReviewPage implements OnInit {
   onQueryParamsChange(params: NzTableQueryParams): void {
     let { pageSize, pageIndex } = params;
     this.tableConfig$.next({ p: pageIndex, s: pageSize });
+    console.log('sadfadsf');
   }
 
   inspectDetails(workid) {
@@ -141,6 +143,3 @@ export class ArtsReviewPage implements OnInit {
     })
   }
 }
-
-
-//[nzData]="tableData$|async"

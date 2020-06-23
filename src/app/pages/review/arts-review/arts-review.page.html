@@ -1,8 +1,8 @@
 <main>
-    <section class="review__menu" *ngrxLet="tableData$; let data">
+    <section class="review__menu">
         <div class="review__menu-title">
             <p>审核管理-作品审核</p>
-            <nz-alert nzType="error" [nzMessage]="data" nzShowIcon></nz-alert>
+            <nz-alert nzType="error" [nzMessage]="error" nzShowIcon></nz-alert>
         </div>
 
         <form [formGroup]="form">
@@ -77,9 +77,6 @@
                     <button nz-button nzType="primary" (click)="onSubmit()">
                         <i nz-icon nzType="search"></i>搜索
                     </button>
-                    <!-- <button nz-button nzType="primary" role="button" (click)="onSubmit()">
-                            <i nz-icon nzType="search"></i>搜索
-                        </button> -->
                     <button nz-button nzType="default" role="button" (click)="onReset()">
                         <i nz-icon nzType="close"></i>重置
                     </button>
@@ -91,7 +88,7 @@
         </form>
     </section>
     <section class="review__table-section">
-        <nz-table class="table" #basicTable [nzData]="data" [nzFrontPagination]="false" [nzTotal]="total"
+        <nz-table class="table" #basicTable [nzData]="tableData$|async" [nzFrontPagination]="false" [nzTotal]="total"
             [(nzPageSize)]="tablePageConfig.s" [(nzPageIndex)]="tablePageConfig.p" [nzLoading]="tableLoadingToggle"
             (nzQueryParams)="onQueryParamsChange($event)" [nzShowQuickJumper]="true">
             <thead>
@@ -116,7 +113,6 @@
                     </td>
                     <td>{{ data.type }}</td>
                     <td>{{ data.type }}</td>
-                    <!-- <td><a (click)="download(data.asset_file)">下载 {{ data.workid }}</a></td> -->
                     <td><a [attr.href]="data.asset_file[0]">下载 {{ data.workid }}</a></td>
                     <td (click)="inspectDetails(data.workid)"><a>查看详情</a></td>
                 </tr>
