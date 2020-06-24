@@ -5,9 +5,7 @@ import { BehaviorSubject, fromEvent, Subject, of, Observable } from 'rxjs';
 import { switchMap, tap, throttleTime, pluck } from 'rxjs/operators';
 import * as moment from 'moment';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserData, UserList, UserRequest, TableConfig } from '../../../core/model/user/user.model';
-
-
+import { UserData, UserList, UserRequest, TableConfig } from '../../../model/user/user.model';
 
 @Component({
   selector: 'app-user',
@@ -34,25 +32,24 @@ export class UserPage implements OnInit {
   }
   tableConfigSubject$: Subject<TableConfig> = new Subject();
   /************************************************************************/
-
+  urlExported: UserRequest;
   tableData$ = this.tableConfigSubject$.pipe(switchMap(
     data => {
       //data.pageIndex--;
-      let req = {
+      let req: TableConfig = {
         ...data,
         pageIndex: data.pageIndex - 1
       }
-      let start = '1970/01/01', end = moment(Date()).format('YYYY/MM/DD');
       let form = this.form.value;
-
-
+      let start = '1970/01/01', end = moment(Date()).format('YYYY/MM/DD');
       let reqForm = {
         nickname: form.nickname === null ? '' : form.nickname,
-        id: form.id === null || form.id === '' ? 0 : form.id,
+        id: (form.id === null || form.id === '') ? 0 : form.id,
         start_time: form.start_time !== null ? moment(form.start_time).format('YYYY/MM/DD') : start,
         end_time: form.end_time !== null ? moment(this.form.value.end_time).format('YYYY/MM/DD') : end
       }
       console.log(reqForm);
+      this.urlExported = reqForm;
       return this.http.get<UserData>(`/user/get_user_list?u=${reqForm.id}&n=${reqForm.nickname}&st=${reqForm.start_time}&et=${reqForm.end_time}&p=${req.pageIndex}&s=${req.pageSize}`).pipe(tap(data => {
         this.total = data.count;
       }), pluck('list'));
@@ -86,11 +83,24 @@ export class UserPage implements OnInit {
   navigateToDetail(uid) {
     this.router.navigate([uid], { relativeTo: this.route });
   }
+
+  download() {
+    console.log(123);
+    let a = document.createElement("a");
+    let href = `http://47.99.94.159:14000/api/v1/user/export_user_list?u=${this.urlExported.id}&n=${this.urlExported.nickname}&st=${this.urlExported.start_time}&et=${this.urlExported.end_time}`;
+    console.log(href);
+    a.setAttribute('href', href);
+    a.click();
+    // this.http.get(`/user/export_user_list?u=0&n=&st=1970/01/01&et=2020/06/23`).subscribe(data => {
+    //   console.log(data);
+    // });
+  }
+
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {

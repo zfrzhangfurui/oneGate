@@ -73,7 +73,9 @@
                     {{data.state.end_time !== null ? moment(data.state.end_time).format('YYYY/MM/DD'):'没封禁'}}
                 </nz-descriptions-item>
                 <nz-descriptions-item nzTitle="封禁理由">{{data.state.description}}</nz-descriptions-item>
-                <nz-descriptions-item nzTitle="封禁记录"></nz-descriptions-item>
+                <nz-descriptions-item nzTitle="封禁记录">
+                    <a (click)="createComponentModal('BannedRecord',[])">封禁记录</a>
+                </nz-descriptions-item>
             </nz-descriptions>
 
         </div>

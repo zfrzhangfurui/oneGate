@@ -25,6 +25,12 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import zh from '@angular/common/locales/zh';
 import { IndexPage } from './pages/index/index.page';
 import { SiderPage } from './pages/index/sider/sider.page';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
+/***********************************************************************/
+import { IconDefinition } from '@ant-design/icons-angular';
+import { AccountBookFill, AlertFill, AlertOutline, SnippetsOutline, CopyrightOutline, FileImageOutline, FileTextOutline, TagsOutline, ArrowsAltOutline } from '@ant-design/icons-angular/icons';
+const icons: IconDefinition[] = [,
+  AccountBookFill, AlertOutline, AlertFill, SnippetsOutline, CopyrightOutline, FileImageOutline, FileTextOutline, TagsOutline, ArrowsAltOutline];
 
 registerLocaleData(zh);
 
@@ -47,6 +53,7 @@ registerLocaleData(zh);
     WebsiteModule,
     NzLayoutModule,
     NzMenuModule,
+    NzSwitchModule,
     CoreModule.forRoot({
       api_gateway: environment.api_gateway
     }),

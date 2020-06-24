@@ -1,8 +1,8 @@
-<main>
+<main *ngrxLet="tableData$;let data;let err = $error">
     <section class="review__menu">
         <div class="review__menu-title">
             <p>审核管理-作品审核</p>
-            <nz-alert nzType="error" [nzMessage]="error" nzShowIcon></nz-alert>
+            <nz-alert nzType="error" [nzMessage]="'Error:'+ error+',未能连接服务器'" nzShowIcon *ngIf="err"></nz-alert>
         </div>
 
         <form [formGroup]="form">
@@ -88,8 +88,8 @@
         </form>
     </section>
     <section class="review__table-section">
-        <nz-table class="table" #basicTable [nzData]="tableData$|async" [nzFrontPagination]="false" [nzTotal]="total"
-            [(nzPageSize)]="tablePageConfig.s" [(nzPageIndex)]="tablePageConfig.p" [nzLoading]="tableLoadingToggle"
+        <nz-table class="table" #basicTable [nzData]="data" [nzFrontPagination]="false" [nzTotal]="total"
+            [nzPageSize]="tablePageConfig.s" [nzPageIndex]="tablePageConfig.p" [nzLoading]="tableLoadingToggle"
             (nzQueryParams)="onQueryParamsChange($event)" [nzShowQuickJumper]="true">
             <thead>
                 <tr>
@@ -113,8 +113,8 @@
                     </td>
                     <td>{{ data.type }}</td>
                     <td>{{ data.type }}</td>
-                    <td><a [attr.href]="data.asset_file[0]">下载 {{ data.workid }}</a></td>
-                    <td (click)="inspectDetails(data.workid)"><a>查看详情</a></td>
+                    <!-- <td><a [attr.href]="data.asset_file[0]">下载 {{ data.workid }}</a></td>
+                    <td (click)="inspectDetails(data.workid)"><a>查看详情</a></td> -->
                 </tr>
             </tbody>
         </nz-table>

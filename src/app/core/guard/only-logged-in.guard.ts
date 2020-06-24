@@ -1,7 +1,7 @@
 import { CanActivate } from "@angular/router";
 import { Injectable } from "@angular/core";
 import { Store, Select } from "@ngxs/store";
-import { UserStateModel } from "../model/me";
+import { UserStateModel } from '../../model/me';
 import { UserState } from "../state/user.state";
 import { Observable } from "rxjs";
 import { map, switchMap, tap } from "rxjs/operators";

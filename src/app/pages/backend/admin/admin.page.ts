@@ -96,13 +96,22 @@ export class AdminPage implements OnInit {
       ]
     },
     {
-      title: '5. 后台管理',
+      title: '5. 网站管理',
       key: '4',
       expanded: true,
       selectable: false,
       children: [
-        { title: '5.1 角色权限', key: '4-0', isLeaf: true, selectable: false },
-        { title: '5.2 用户管理', key: '4-1', isLeaf: true, selectable: false },
+        { title: '4.1 Banner', key: '4-0', isLeaf: true, selectable: false },
+      ]
+    },
+    {
+      title: '6. 后台管理',
+      key: '5',
+      expanded: true,
+      selectable: false,
+      children: [
+        { title: '6.1 角色权限', key: '5-0', isLeaf: true, selectable: false },
+        { title: '6.2 用户管理', key: '5-1', isLeaf: true, selectable: false },
       ]
     }
   ];

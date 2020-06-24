@@ -1,7 +1,14 @@
 <nz-layout>
-    <nz-header style="background-color: #5584FF;height: 50px;"></nz-header>
+    <nz-header class="header">
+        <nz-switch class="collapsed-button" nzSize="big" [(ngModel)]="isCollapsed" nzCheckedChildren="开"
+            nzUnCheckedChildren="关">
+        </nz-switch>
+    </nz-header>
     <nz-layout>
-        <nz-sider nzWidth="200px" nzTheme="light">
+        <nz-sider nzTheme="light" nzCollapsible [nzTrigger]="null" nzWidth="200px" [nzCollapsed]="isCollapsed"
+            [nzCollapsedWidth]="0">
+
+
             <app-sider></app-sider>
         </nz-sider>
         <nz-layout class="inner-layout">

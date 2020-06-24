@@ -63,6 +63,10 @@
                     <td (click)="navigateToDetail(data.uid)"><a>查看详情</a></td>
                 </tr>
             </tbody>
+            <div style="position: relative;">
+                <button nz-button nzType="primary" style="position: absolute;top:15px" (click)="download()">下载</button>
+            </div>
         </nz-table>
+
     </section>
 </main>

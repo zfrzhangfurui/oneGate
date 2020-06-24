@@ -28,6 +28,7 @@ import { ReactiveComponentModule } from '../../core/reactive/reactive-component.
 import { ViolationPage } from './violation/violation.page';
 import { ReportedPage } from './reported/reported.page';
 import { ReportedDetailPage } from './reported-detail/reported-detail.page';
+import { ModalPage } from './modal/modal.page';
 const icons: IconDefinition[] = [,
     AccountBookFill, AlertOutline, AlertFill, SnippetsOutline, CopyrightOutline, FileImageOutline, FileTextOutline, TagsOutline, ArrowsAltOutline];
 
@@ -37,7 +38,8 @@ const icons: IconDefinition[] = [,
         UserDetailPage,
         ViolationPage,
         ReportedPage,
-        ReportedDetailPage
+        ReportedDetailPage,
+        ModalPage
     ],
     imports: [
         CommonModule,

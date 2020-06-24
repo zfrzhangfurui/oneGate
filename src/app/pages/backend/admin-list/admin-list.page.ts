@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { of, Subject } from 'rxjs';
-import { TableConfig } from '../../../core/model/admin-list.model';
+import { TableConfig } from '../../../model/admin-list.model';
 /*****************************modal*********************************************/
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ModalPage } from '../modal/modal.page';

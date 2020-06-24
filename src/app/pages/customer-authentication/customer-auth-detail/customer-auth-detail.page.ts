@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, pipe, of, combineLatest, Observable } from 'rxjs';
 import { tap, switchMap, pluck } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { CustomerAuthDetail, Modal } from '../../../core/model/customer-auth-detail.model';
+import { CustomerAuthDetail, Modal } from '../../../model/customer-auth-detail.model';
 import * as moment from 'moment';
 enum AuthType {
   authAccept = 'authAccept',

@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./index.page.less']
 })
 export class IndexPage implements OnInit {
-
+  isCollapsed: boolean = false;
   constructor() { }
 
   ngOnInit(): void {

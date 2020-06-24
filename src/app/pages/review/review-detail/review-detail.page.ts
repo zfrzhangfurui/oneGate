@@ -4,7 +4,7 @@ import { switchMap, auditTime } from 'rxjs/operators';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import * as moment from 'moment';
 import { saveAs } from 'file-saver';
-import { SingleWork, AuditList } from '../../../core/model/singleArt.model';
+import { SingleWork, AuditList } from '../../../model/singleArt.model';
 import { Observable } from 'rxjs';
 enum modalMode {
   modalAccept = 'modalAccept',

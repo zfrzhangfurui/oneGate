@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { TableConfig } from '../../../core/model/user/user.model';
+import { TableConfig } from '../../../model/user/user.model';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import * as moment from 'moment';
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';

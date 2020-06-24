@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TableConfig } from '../../../core/model/revenue/order-list.model';
+import { TableConfig } from '../../../model/revenue/order-list.model';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import * as moment from 'moment';
 import { ActivatedRoute, Router } from '@angular/router';

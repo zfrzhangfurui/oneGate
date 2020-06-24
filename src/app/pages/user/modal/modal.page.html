@@ -1,0 +1,30 @@
+<div [ngSwitch]="modalSwitch">
+    <div *ngSwitchCase="'BannedRecord'">
+        <p>{{title}}</p>
+        <div>
+            <section class="table-section">
+                <nz-table class="table" #basicTable [nzData]="tableData$|async" [nzFrontPagination]="false"
+                    [nzTotal]="total" [(nzPageSize)]="tableConfig.pageSize" [(nzPageIndex)]="tableConfig.pageIndex"
+                    [nzLoading]="tableLoadingToggle" (nzQueryParams)="onQueryParamsChange($event)"
+                    [nzShowQuickJumper]="true">
+                    <thead>
+                        <tr>
+                            <th>用户ID</th>
+                            <th>用户名称</th>
+                            <th>注册时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of basicTable.data">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><a>查看详情</a></td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </section>
+        </div>
+    </div>
+</div>

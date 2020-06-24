@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CustomerList, RequestList, tableConfig, CustomerAuthForm } from '../../../core/model/customer-auth.model';
+import { CustomerList, RequestList, tableConfig, CustomerAuthForm } from '../../../model/customer-auth.model';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { BehaviorSubject, fromEvent, Subject, of, Observable } from 'rxjs';
 import { withLatestFrom, switchMap, tap, throttleTime, pluck } from 'rxjs/operators';

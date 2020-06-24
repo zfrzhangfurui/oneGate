@@ -26,7 +26,7 @@ import { IconDefinition } from '@ant-design/icons-angular';
 import { ReactiveComponentModule } from '../../core/reactive/reactive-component.module';
 import { AccountBookFill, AlertFill, AlertOutline, SnippetsOutline, CopyrightOutline, FileImageOutline, FileTextOutline, TagsOutline, ArrowsAltOutline } from '@ant-design/icons-angular/icons';
 import { AdminListPage } from './admin-list/admin-list.page';
-import { ModalPage, Modal } from './modal/modal.page';
+import { ModalPage } from './modal/modal.page';
 const icons: IconDefinition[] = [,
     AccountBookFill, AlertOutline, AlertFill, SnippetsOutline, CopyrightOutline, FileImageOutline, FileTextOutline, TagsOutline, ArrowsAltOutline];
 
