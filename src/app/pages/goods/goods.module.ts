@@ -24,7 +24,7 @@ const icons: IconDefinition[] = [,
             [
                 { path: '', redirectTo: 'goods-published', pathMatch: 'full' },
                 { path: 'goods-published', component: GoodsPublishedPage },
-                // { path: 'goods-detail/:id', component: GoodsDetailPage }
+                { path: 'goods-detail/:workid', component: GoodsDetailPage }
             ]
         ),
     ]

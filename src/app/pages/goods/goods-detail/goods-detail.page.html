@@ -2,8 +2,8 @@
 
     <nav>
         <div class="nav-left">
-            <button nz-button nzType="primary">返回</button>
-            <p>内容管理-已发布商品</p>
+            <button nz-button nzType="primary" (click)="onBackListPage()">返回</button>
+            <p>内容管理-已发布作品</p>
         </div>
         <div class="nav-right">
             <div class="right-button">
@@ -18,11 +18,19 @@
         </div>
     </nav>
     <section>
-        <div class="title">
-            <p>审核信息</p>
-        </div>
-        <div>
-            <nz-descriptions [nzColumn]="4" nzBordered nzLayout="vertical">
+        <div class="audit">
+            <fz-title title="审核信息"></fz-title>
+            <div class="content">
+                <fz-descriptions col="4">
+                    <fz-descriptions-item fzIcon="infoCircle" title="审核编号"></fz-descriptions-item>
+                    <fz-descriptions-item fzIcon="user" title="审核人"></fz-descriptions-item>
+                    <fz-descriptions-item fzIcon="time-circle" title="审核时间"></fz-descriptions-item>
+                    <fz-descriptions-item fzIcon="Batch-folding" title="审核结果"></fz-descriptions-item>
+                    <fz-descriptions-item fzIcon="infoCircle" title="拒绝理由"></fz-descriptions-item>
+                </fz-descriptions>
+            </div>
+
+            <!-- <nz-descriptions [nzColumn]="4" nzBordered nzLayout="vertical">
                 <nz-descriptions-item nzTitle="审核人">
                     用户ABC
                 </nz-descriptions-item>
@@ -35,7 +43,7 @@
                 <nz-descriptions-item nzTitle="拒绝理由">
                     用户ABC
                 </nz-descriptions-item>
-            </nz-descriptions>
+            </nz-descriptions> -->
         </div>
     </section>
 

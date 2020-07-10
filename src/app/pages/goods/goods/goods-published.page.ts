@@ -63,11 +63,9 @@ export class GoodsPublishedPage implements OnInit, AfterViewInit {
     }), shareReplay()
   )
 
-  navigateToDetail(uid) {
-    console.log(uid);
-
-
-    this.router.navigate(['../goods-detail', uid], { relativeTo: this.route })
+  navigateToDetail(workid) {
+    console.log(workid);
+    this.router.navigate(['../goods-detail', workid], { relativeTo: this.route })
   }
   search() {
     console.log(123);

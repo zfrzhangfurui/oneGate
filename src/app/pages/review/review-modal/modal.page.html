@@ -28,6 +28,9 @@
         <textarea rows="4" nz-input class="reason" [(ngModel)]="comments"></textarea>
     </div>
 
+    <div *ngSwitchCase="'displayImage'">
+        <img [src]="content" />
+    </div>
 </div>
 
 <ng-template [nzModalFooter]>

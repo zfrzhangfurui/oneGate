@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, ViewChild, ElementRef, ViewChildren, QueryList, ContentChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, auditTime, combineAll, withLatestFrom, shareReplay } from 'rxjs/operators';
 import { HttpClient, HttpResponse } from '@angular/common/http';
@@ -24,8 +24,9 @@ export class ReviewDetailPage implements OnInit {
   /********************modal*********************************************/
   @ViewChild('declineInput') declineInput: ElementRef;
   /********************modal*********************************************/
-
+  @ViewChildren('imgSeriesNew') imgSeriesNew!: QueryList<ElementRef>;
   moment = moment;
+  mode: number;
   //type	integer/文件类型 0:Live2D 1:原画
   //state: 0:仅展示 1:未出售 2:已售出
 
@@ -34,13 +35,15 @@ export class ReviewDetailPage implements OnInit {
     let workid = +params.get('workid');
     let version = +params.get('version');
     let mode = +params.get('mode');
+    this.mode = mode;
     let submittype = +params.get('submittype');
     let URL1: string = null;
     let URL2: string = null;
     let URL3: string = `/work/get_cooperation_info?w=${workid}`;
     console.log(workid);
     console.log(version);
-    console.log(mode);
+    console.log('这是params：', this.mode);
+    //URL1 是New URL2是old
     switch (mode) {
       case 0: URL1 = `/work/get_apply_work?w=${workid}`; break;
       case 1: URL1 = `/work/get_audit_work_version?w=${workid}&v=${version}`; break;
@@ -71,6 +74,7 @@ export class ReviewDetailPage implements OnInit {
     }
     return req;
   }),
+    //work1是new work2是old
     switchMap(([work1, work2, coopwork, workid, mode]) => {
       console.log({ ...work1 });
       console.log({ ...work2 });
@@ -131,7 +135,6 @@ export class ReviewDetailPage implements OnInit {
         } else {
           if (work1[attr] === work2[attr]) {
             changeLog[attr] = true;
-            // console.log('dao zhe la');
           } else {
             if (attr !== 'time') {
               changeLog[attr] = false;
@@ -145,11 +148,8 @@ export class ReviewDetailPage implements OnInit {
       work2.tagArray = work2.tag.split(',');
       /******************************modal***********************************************/
       let modalToggle;
-      if (splitView) {
-        modalToggle = work2.auditstate;
-      } else {
-        modalToggle = work1.auditstate;
-      }
+      //work1是new work2是old;
+      modalToggle = work1.auditstate;
       /******************************download***********************************************/
       // work1.file_size = work1.file_size/1000/1000
 
@@ -166,15 +166,19 @@ export class ReviewDetailPage implements OnInit {
 
   /*****************************modal*********************************************/
 
-  createComponentModal(modalType, content): void {
+  createComponentModal(modalType, content, width?): void {
     console.log(modalType, content);
     let title;
     modalType = modalType as Modal;
     console.log(modalType);
+    if (width === undefined) {
+      width = 416;
+    }
     switch (modalType) {
       case Modal.auditAccepted: title = '审核通过'; break;
       case Modal.auditDeclined: title = '审核拒绝'; break;
       case Modal.cancelPublish: title = '审核拒绝'; break;
+      case Modal.displayImage: title = '图片'; break;
     }
     const modal = this.modal.create({
       // nzTitle: title,
@@ -188,7 +192,8 @@ export class ReviewDetailPage implements OnInit {
       },
       nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000)),
       nzClosable: false,
-      nzMaskClosable: false
+      nzMaskClosable: false,
+      nzWidth: width,
     });
     const instance = modal.getContentComponent();
     modal.afterOpen.subscribe(() => console.log('[afterOpen] emitted!'));
@@ -202,7 +207,17 @@ export class ReviewDetailPage implements OnInit {
 
   /*****************************modal*********************************************/
 
+  checkImg(item) {
+    console.log(item);
+    // console.log(this.imgSeriesNew);
+    let divNativeElement = this.imgSeriesNew.toArray()[0].nativeElement.children[0].children;
 
+
+    // console.log(divNativeElement[0])
+    // console.log(divNativeElement[0].naturalWidth);
+    this.createComponentModal('displayImage', item, divNativeElement[0].naturalWidth + 50);
+    //this.createComponentModal('displayImage', item);
+  }
 
 
   constructor(
@@ -213,7 +228,7 @@ export class ReviewDetailPage implements OnInit {
   ) { }
 
   backTolist() {
-    this.router.navigate([''], { relativeTo: this.route });
+    this.router.navigate([''], { relativeTo: this.route, queryParams: { mode: this.mode } });
   }
 
   ngOnInit(): void {

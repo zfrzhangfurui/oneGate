@@ -13,7 +13,7 @@ import { AccountBookFill, AlertFill, AlertOutline, SnippetsOutline, CopyrightOut
 import { OnlyLoggedInUserGuard } from '../../core/guard/only-logged-in.guard';
 import { OnlyNumberDirective } from '../../shared/only-number.directive';
 import { SelectModule } from '../../core/custom-select/select.module';
-import { FzDesignModule } from '../../core/custom-component/fz-design.module';
+// import { FzDesignModule } from '../../core/custom-component/fz-design.module';
 
 const icons: IconDefinition[] = [,
     AccountBookFill, AlertOutline, AlertFill, SnippetsOutline, CopyrightOutline, FileImageOutline, FileTextOutline, TagsOutline, ArrowsAltOutline];
@@ -29,7 +29,7 @@ const icons: IconDefinition[] = [,
         SelectModule,
         SharedModule,
         ReactiveComponentModule,
-        FzDesignModule,
+        // FzDesignModule,
         RouterModule.forChild([{
             path: '',
             component: ReviewPage,

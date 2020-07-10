@@ -41,13 +41,13 @@
     <section class="work-detail-section">
         <div class="section-left" [ngClass]="{'left-extend': !data.splitView,'left-split': data.splitView}">
             <div class="review-information">
-                <fz-title title="基础信息"></fz-title>
+                <fz-title title="基础信息"><span *ngIf="data.splitView">（本侧为新）</span></fz-title>
                 <!-- <div class="review-information-title">基础信息</div> -->
                 <div class="review-information-content">
 
                     <fz-descriptions [col]="!data.splitView? 4:2 ">
-                        <fz-descriptions-item fzIcon="batchFolding" title="作品名称" [fzStateToggle]="false"
-                            fzStateIcon="new">
+                        <fz-descriptions-item fzIcon="batchFolding" title="作品名称" fzStateIcon="new"
+                            [fzStateToggle]="!data.changeLog.name">
                             {{data.work1.name}}
                         </fz-descriptions-item>
                         <fz-descriptions-item fzIcon="infoCircle" title="作品ID" [fzStateToggle]="false">
@@ -62,13 +62,8 @@
                         <fz-descriptions-item fzIcon="timeCircle" title="提交时间" [fzStateToggle]="false">
                             {{moment(data.work1.submittime).format('YYYY/MM/DD')}}
                         </fz-descriptions-item>
-                        <fz-descriptions-item fzIcon="detail" title="作品分类" [fzStateToggle]="false"
-                            [ngSwitch]="data.work1.category">
-
-                            <!-- <span [ngSwitch]="data.work1.category">
-                                <span *ngSwitchCase="0">output</span>
-                                <span *ngSwitchCase="1">output2</span>
-                            </span> -->
+                        <fz-descriptions-item fzIcon="detail" title="作品分类" [fzStateToggle]="!data.changeLog.category"
+                            fzStateIcon="new" [ngSwitch]="data.work1.category">
                             <span *ngSwitchCase="0">live2d</span>
                             <span *ngSwitchCase="1">原画</span>
                         </fz-descriptions-item>
@@ -78,12 +73,13 @@
 
             <div class="details">
                 <div class="detail-title">
-                    <fz-title title="作品详细信息"></fz-title>
+                    <fz-title title="作品详细信息"><span *ngIf="data.splitView">（本侧为新）</span></fz-title>
                 </div>
 
                 <div class="details-intro">
                     <fz-descriptions col="1">
-                        <fz-descriptions-item fzIcon="batchFolding" title="作品介绍" [fzStateToggle]="false">
+                        <fz-descriptions-item fzIcon="batchFolding" title="作品介绍"
+                            [fzStateToggle]="!data.changeLog.description" fzStateIcon="new">
                             {{data.work1.description}}
                         </fz-descriptions-item>
                         <fz-descriptions-item fzIcon="tag" title="版权声明" [fzStateToggle]="false"
@@ -91,34 +87,25 @@
                             <span *ngSwitchCase="0">原创</span>
                             <span *ngSwitchCase="1">非原创</span>
                         </fz-descriptions-item>
-                        <fz-descriptions-item fzIcon="tag" title="标签" [fzStateToggle]="false">
+                        <fz-descriptions-item fzIcon="tag" title="标签" [fzStateToggle]="!data.changeLog.tag"
+                            fzStateIcon="new">
                             <nz-tag *ngFor="let item of data.work1.tagArray">
                                 {{item}}
                             </nz-tag>
                         </fz-descriptions-item>
                         <fz-descriptions-item fzIcon="image" title="封面图">
-                            <div style="width: 30%;padding-top: 30%;position: relative;">
-                                <img [src]="data.work1.cover"
-                                    style="position: absolute;top:0;left:0;width: 100%;height:100%">
-
+                            <div class="img-cover-div">
+                                <img [src]="data.work1.cover" class="img-cover">
                             </div>
                         </fz-descriptions-item>
                         <fz-descriptions-item fzIcon="fileImage" [title]="data.work1.category === 0? 'live2D模型':'上传图片'">
                             <a *ngIf="data.work1.category === 0"
                                 [href]="data.work1.file">下载模型文件(大约{{(data.work1.file_size/1000/1000).toFixed(1)}}M)</a>
-                            <div
-                                style="display: flex;flex-direction: row;justify-content:flex-start;width: 100%;flex-wrap: wrap;">
-                                <div style="position: relative;width: 25%;padding-top: 20%;margin-right: 10px;margin-top: 10px;"
-                                    *ngFor="let item of data.work1.assets">
-                                    <img [src]="item"
-                                        style="position: absolute;top:0;left:0;width: 100%;height: 100%;" />
+                            <div class="img-series-div" #imgSeriesNew>
+                                <div *ngFor="let item of data.work1.assets" class="img-series">
+
+                                    <img [src]="item" class="img" (click)="checkImg(item)" />
                                 </div>
-
-
-                                <!-- <fz-image *ngFor="let item of data.work1.assets" [url]="item"
-                                    style="position: relative;width:25%;padding-top: 20%;margin-right: 10px;margin-top:10px;">
-                                </fz-image> -->
-
                             </div>
                         </fz-descriptions-item>
                     </fz-descriptions>
@@ -131,8 +118,7 @@
                 <fz-title title="基础信息"></fz-title>
                 <div class="review-information-content">
                     <fz-descriptions col="2">
-                        <fz-descriptions-item fzIcon="batchFolding" title="作品名称" [fzStateToggle]="!data.changeLog.name"
-                            fzStateIcon="new">
+                        <fz-descriptions-item fzIcon="batchFolding" title="作品名称" [fzStateToggle]="false">
                             {{data.work2.name}}
                         </fz-descriptions-item>
                         <fz-descriptions-item fzIcon="infoCircle" title="作品ID" [fzStateToggle]="false">{{data.workid}}
@@ -165,25 +151,22 @@
                 <div class="details-intro">
 
                     <fz-descriptions col="1">
-                        <fz-descriptions-item fzIcon="batchFolding" title="作品介绍"
-                            [fzStateToggle]="!data.changeLog.description" fzStateIcon="new">
+                        <fz-descriptions-item fzIcon="batchFolding" title="作品介绍">
                             {{data.work2.description}}
                         </fz-descriptions-item>
                         <fz-descriptions-item fzIcon="tag" title="版权声明" [fzStateToggle]="false"
-                            [ngSwitch]="data.work1.copyright">
+                            [ngSwitch]="data.work2.copyright">
                             <span *ngSwitchCase="0">原创</span>
                             <span *ngSwitchCase="1">非原创</span>
                         </fz-descriptions-item>
-                        <fz-descriptions-item fzIcon="tag" title="标签" [fzStateToggle]="!data.changeLog.tag"
-                            fzStateIcon="new">
+                        <fz-descriptions-item fzIcon="tag" title="标签">
                             <nz-tag *ngFor="let item of data.work2.tagArray">
                                 {{item}}
                             </nz-tag>
                         </fz-descriptions-item>
                         <fz-descriptions-item fzIcon="image" title="封面图">
-                            <div style="width: 30%;padding-top: 30%;position: relative;">
-                                <img [src]="data.work2.cover"
-                                    style="position: absolute;top:0;left:0;width: 100%;height:100%">
+                            <div class="img-cover-div">
+                                <img [src]="data.work2.cover" class="img-cover">
                             </div>
                         </fz-descriptions-item>
                         <fz-descriptions-item fzIcon="fileImage" [title]="data.work2.category === 0? 'live2D模型':'上传图片'">
@@ -235,38 +218,7 @@
     <section class="goods-info" *ngIf="data.work1.goods.length !== 0">
         <div class="goods-left" [ngClass]="{'left-extend': !data.splitView,'left-split': data.splitView}">
             <div class="goods-item" *ngFor="let item of data.work1.goods;index as i">
-                <fz-title [title]="'商品信息-' + i + 1">
-                </fz-title>
-                <div class="goods-item-content">
-
-                    <fz-descriptions [col]="!data.splitView? 4:2 ">
-                        <fz-descriptions-item fzIcon="infoCircle" title="商品ID" [fzStateToggle]="false">
-                            {{item.id}}
-                        </fz-descriptions-item>
-                        <fz-descriptions-item fzIcon="batchFolding" title="商品名称" [fzStateToggle]="false"
-                            fzStateIcon="new">
-                            {{item.name}}
-                        </fz-descriptions-item>
-                        <fz-descriptions-item fzIcon="user" title="出售类型" [fzStateToggle]="false">
-                            <span [ngSwitch]="item.maxstock">
-                                <span *ngSwitchCase="-1">不限量</span>
-                                <span *ngSwitchCase="1">一个</span>
-                            </span>
-                        </fz-descriptions-item>
-                        <fz-descriptions-item fzIcon="user" title="商品价格" [fzStateToggle]="false">
-                            {{item.price}}
-                        </fz-descriptions-item>
-
-                        <fz-descriptions-item fzIcon="timeCircle" title="可下载内容" [fzStateToggle]="false">
-                            <a [href]="item.file">下载附件</a>
-                        </fz-descriptions-item>
-                    </fz-descriptions>
-                </div>
-            </div>
-        </div>
-        <div class="goods-right" *ngIf="data.splitView">
-            <div class="goods-item" *ngFor="let item of data.work2.goods;index as i">
-                <fz-title [title]="'商品信息-'+ i + 1" [iconToggle]="data.changeLog.goods[i].includes(false)" icon="new">
+                <fz-title [title]="'商品信息-' + i + 1" [iconToggle]="data.changeLog.goods[i].includes(false)" icon="new">
                 </fz-title>
                 <div class="goods-item-content">
                     <fz-descriptions [col]="!data.splitView? 4:2 ">
@@ -287,6 +239,35 @@
                         </fz-descriptions-item>
                         <fz-descriptions-item fzIcon="user" title="商品价格" [fzStateToggle]="!data.changeLog.goods[i][3]"
                             fzStateIcon="new">
+                            {{item.price}}
+                        </fz-descriptions-item>
+
+                        <fz-descriptions-item fzIcon="timeCircle" title="可下载内容" [fzStateToggle]="false">
+                            <a [href]="item.file">下载附件</a>
+                        </fz-descriptions-item>
+                    </fz-descriptions>
+                </div>
+            </div>
+        </div>
+        <div class="goods-right" *ngIf="data.splitView">
+            <div class="goods-item" *ngFor="let item of data.work2.goods;index as i">
+                <fz-title [title]="'商品信息-'+ i + 1">
+                </fz-title>
+                <div class="goods-item-content">
+                    <fz-descriptions [col]="!data.splitView? 4:2 ">
+                        <fz-descriptions-item fzIcon="infoCircle" title="商品ID" [fzStateToggle]="false">
+                            {{item.id}}
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="batchFolding" title="商品名称" [fzStateToggle]="false">
+                            {{item.name}}
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="user" title="出售类型" [fzStateToggle]="false">
+                            <span [ngSwitch]="item.maxstock">
+                                <span *ngSwitchCase="-1">不限量</span>
+                                <span *ngSwitchCase="1">一个</span>
+                            </span>
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="user" title="商品价格" [fzStateToggle]="false">
                             {{item.price}}
                         </fz-descriptions-item>
 

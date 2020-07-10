@@ -112,5 +112,6 @@ export interface CooperationInfo {
 export enum Modal {
     auditAccepted = 'auditAccepted',
     auditDeclined = 'auditDeclined',
-    cancelPublish = 'modalCancelPublish'
+    cancelPublish = 'modalCancelPublish',
+    displayImage = 'displayImage'
 }

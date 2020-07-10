@@ -31,20 +31,30 @@ export class ModalPage {
             access = 2;
         } else if (this.modalSwitch === Modal.cancelPublish) {
             access = 2;
+        } else if (this.modalSwitch === Modal.displayImage) {
+            access = 100;
         }
-        this.onAuditWork(access, this.comments).subscribe(data => {
+        if (access === 100) {
             setTimeout(() => {
                 this.isConfirmLoading = false;
-                this.modal.destroy(this.content[0]);
+                this.modal.destroy();
             }, 1000);
+        } else {
+            this.onAuditWork(access, this.comments).subscribe(data => {
+                setTimeout(() => {
+                    this.isConfirmLoading = false;
+                    this.modal.destroy(this.content[0]);
+                }, 1000);
 
-        }, err => {
-            setTimeout(() => {
-                this.isConfirmLoading = false;
-                console.log(err, '出错啦')
-            }, 1000);
+            }, err => {
+                setTimeout(() => {
+                    this.isConfirmLoading = false;
+                    console.log(err, '出错啦')
+                }, 1000);
 
-        })
+            })
+        }
+
 
     }
 

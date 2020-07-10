@@ -18,6 +18,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { FzDesignModule } from '../core/custom-component/fz-design.module';
 
 const DECLARATIONS =
     [
@@ -41,6 +42,7 @@ const DECLARATIONS =
         NzAlertModule,
         ReactiveFormsModule,
         FormsModule,
+        FzDesignModule
     ];
 const EXPORTS = DECLARATIONS;
 

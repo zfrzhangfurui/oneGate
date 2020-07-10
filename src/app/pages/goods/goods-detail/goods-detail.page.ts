@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-goods-detail',
@@ -7,7 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GoodsDetailPage implements OnInit {
 
-  constructor() { }
+
+
+  onBackListPage() {
+    this.router.navigate(['../../goods-published'], { relativeTo: this.route });
+  }
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
   }

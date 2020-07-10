@@ -4,8 +4,8 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { HttpClient, HttpEvent, HttpSentEvent } from '@angular/common/http';
 import * as moment from 'moment';
 import { ArtsReviewModel, navConfigModel, tableConfigModel, httpModel } from '../../../model/arts-review/review-list.model';
-import { BehaviorSubject, Subject, of, from, Observable } from 'rxjs';
-import { switchMap, tap, pluck, catchError } from 'rxjs/operators';
+import { BehaviorSubject, Subject, of, from, Observable, forkJoin } from 'rxjs';
+import { switchMap, tap, pluck, catchError, shareReplay } from 'rxjs/operators';
 import { NzTableQueryParams } from 'ng-zorro-antd/table/public-api';
 import { Router, ActivatedRoute } from '@angular/router';
 import { withLatestFrom, map } from "rxjs/operators";
@@ -13,7 +13,7 @@ import { Config } from 'protractor';
 import { stringify } from 'querystring';
 const defaultTablePageConfig: tableConfigModel = {
   p: 1,
-  s: 5
+  s: 10
 }
 const defaultConfig: navConfigModel = {
   w: null,
@@ -36,12 +36,13 @@ export class ArtsReviewPage implements OnInit, AfterViewInit {
   err: boolean = false;
   error: string;
   /*error*/
-  mode: number = 0;
+  mode: number;
+  userChangeModeToggle: boolean = false;
   //this will be current page 
 
   tablePageConfig: tableConfigModel = {
     p: 1,
-    s: 5,
+    s: 10,
   }
   tableLoadingToggle: boolean = false;
   total = 1;
@@ -54,8 +55,6 @@ export class ArtsReviewPage implements OnInit, AfterViewInit {
     t: [-1],
     ta: [-1],
   });
-  currentMode: number = 0;
-  moment1: moment.Moment;
   momentUnix = moment;
   tableConfig$: Subject<tableConfigModel> = new Subject();
   displayCounter(event) {
@@ -63,8 +62,17 @@ export class ArtsReviewPage implements OnInit, AfterViewInit {
   }
 
   tableData$ = this.tableConfig$.pipe(
-    switchMap((tableConfig) => {
-      let mode = this.mode;
+    withLatestFrom(this.route.queryParams),
+    switchMap(([tableConfig, params]) => {
+      let mode;
+      console.log('这是params：', params);
+      if (this.userChangeModeToggle) {
+        mode = this.mode;
+      } else {
+        params.hasOwnProperty('mode') ? mode = +params.mode : mode = 0;
+      }
+      console.log('这是mode:', mode);
+
       this.err = false;
       this.tableLoadingToggle = true;
       let tableConfigClone = { ...tableConfig };
@@ -85,20 +93,28 @@ export class ArtsReviewPage implements OnInit, AfterViewInit {
       } else if (mode === 1 || mode === 2) {
         req = `/work/get_audit_work_logs?w=${httpConfig.w}&p=${httpConfig.p}&s=${httpConfig.s}&n=${httpConfig.n}&un=${httpConfig.un}&st=${httpConfig.st}&et=${httpConfig.et}&t=${httpConfig.t}&a=${mode}`;
       }
-      return this.http.get<ArtsReviewModel>(req).
-        // return this.http.get<ArtsReviewModel>(onLaunchRequest(httpParamConfig, this.mode, tableConfigClone, configClone)).
-        pipe(tap(data => {
-          console.log(data);
-          this.total = data.count;
-          this.tableLoadingToggle = false;
-        },
-          error => {
-            this.err = true;
-            this.error = error.status;
-            console.log(error);
-          }), pluck('list'));
 
-    })
+      console.log(req);
+      let onGoingRequest = (req) => {
+        return this.http.get<ArtsReviewModel>(req);
+      }
+      return forkJoin(onGoingRequest(req), of(mode))
+    }),
+    tap(([data, mode]) => {
+      console.log(data);
+      this.total = data.count;
+      this.tableLoadingToggle = false;
+      this.mode = mode;
+      this.userChangeModeToggle = false;
+    },
+      error => {
+        this.err = true;
+        this.error = error.status;
+        console.log(error);
+      }), switchMap(([data, mode]) => {
+        return of(data)
+      }), pluck('list')
+
   )
 
   constructor(
@@ -110,6 +126,7 @@ export class ArtsReviewPage implements OnInit, AfterViewInit {
   }
 
   changeMode() {
+    this.userChangeModeToggle = true;
     this.form.setValue(defaultConfig);
     this.tablePageConfig.p = defaultTablePageConfig.p;
     this.tablePageConfig.s = defaultTablePageConfig.s;
@@ -140,7 +157,6 @@ export class ArtsReviewPage implements OnInit, AfterViewInit {
     if (typeof version === 'undefined') {
       version = 1;
     }
-
     this.router.navigate([workid, submittype, version, this.mode], { relativeTo: this.route });
   }
   download(fileRoute) {
@@ -151,7 +167,16 @@ export class ArtsReviewPage implements OnInit, AfterViewInit {
     console.log(j);
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    // this.route.queryParams.subscribe(params => {
+    //   this.mode = params.mode || 0;
+    //   console.log(this.mode);
+    // })
+
+    this.tableData$.subscribe(data => {
+      console.log(data);
+    })
+  }
 
   ngAfterViewInit() { }
 }
