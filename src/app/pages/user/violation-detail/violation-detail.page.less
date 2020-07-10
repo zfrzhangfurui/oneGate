@@ -1,0 +1,30 @@
+p{
+    padding:0;
+    margin:0;
+}
+section{
+    padding:20px 20px;
+    &>.nav{
+        display: flex;
+        justify-content: space-between;
+        &>.nav-left{
+            display: flex;
+            align-items: center;
+            &>:first-of-type{
+                margin-right: 20px;
+            }
+        }
+    }
+    &>.content{
+        margin-top: 20px;
+        border: 1px solid #DCDEE3;
+        border-radius: 5px;
+        &>.title{
+            border-bottom: 1px solid #DCDEE3;
+            &>:first-of-type{
+                padding: 15px 20px;
+            }
+        }
+ 
+    }
+}

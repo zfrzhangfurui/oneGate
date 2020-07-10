@@ -25,6 +25,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import zh from '@angular/common/locales/zh';
 import { IndexPage } from './pages/index/index.page';
 import { SiderPage } from './pages/index/sider/sider.page';
+import { Test } from './pages/test/test';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 /***********************************************************************/
 import { IconDefinition } from '@ant-design/icons-angular';

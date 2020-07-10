@@ -1,5 +1,11 @@
 export enum Modal {
-    BannedRecord = 'BannedRecord'
+    BannedRecord = 'BannedRecord',
+    UserBanned = 'UserBanned',
+    UserBannedRelease = 'UserBannedRelease',
+    ReportViolation = 'ReportViolation',
+    ReportNoneViolation = 'ReportNoneViolation'
+
+    /************report Modal****************/
 }
 
 export interface tableConfig {

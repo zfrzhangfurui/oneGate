@@ -2,8 +2,10 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { IndexPage } from './pages/index/index.page';
 import { SiderPage } from './pages/index/sider/sider.page';
+import { Test } from './pages/test/test';
 const routes: Routes = [
   { path: '', redirectTo: 'index', pathMatch: 'full' },
+  // { path: 'test', component: Test },
   {
     path: 'index', component: IndexPage, children: [
       { path: '', redirectTo: 'review', pathMatch: 'full' },

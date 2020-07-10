@@ -1,0 +1,43 @@
+<div class="ant-descriptions-view">
+    <table>
+        <tbody>
+            <ng-container *ngFor="let row of itemMatrix">
+                <tr class="ant-descriptions-row">
+                    <ng-container *ngFor="let item of row">
+                        <td class="ant-descriptions-item">
+                            <span class="ant-descriptions-item-label">
+                                <object class="svg" width="15px" height="15px" fzIcon [iconType]="item.fzIcon"
+                                    type="image/svg+xml" codebase="http://www.adobe.com/svg/viewer/imstall/">
+                                </object>
+                                <!-- <object class="svg" data="/assets/svgs/diff.svg" width="15px" height="15px"
+                                    type="image/svg+xml" codebase="http://www.adobe.com/svg/viewer/imstall/">
+                                </object> -->
+                                {{item.title}}：
+
+                                <!-- <object class="svg" width="30px" height="20px" data="/assets/svgs/new.svg"
+                                        style="margin-left: 20px;" type="image/svg+xml"
+                                        codebase="http://www.adobe.com/svg/viewer/imstall/">
+                                    </object> -->
+
+                                <object *ngIf="item.fzStateToggle" class="svg" width="60px" height="15px" fzIcon
+                                    [iconType]="item.fzStateIcon" style="margin-left: 10px;" type="image/svg+xml"
+                                    codebase="http://www.adobe.com/svg/viewer/imstall/">
+                                </object>
+
+                            </span>
+                        </td>
+                    </ng-container>
+                </tr>
+                <tr class="ant-descriptions-row">
+                    <ng-container *ngFor="let item of row">
+                        <td class="ant-descriptions-item result_td">
+
+                            <ng-template [ngTemplateOutlet]="item.content"></ng-template>
+
+                        </td>
+                    </ng-container>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>

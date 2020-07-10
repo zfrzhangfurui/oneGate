@@ -1,0 +1,51 @@
+td,tr{
+    padding:0;
+    margin:0;
+}
+
+.ant-descriptions-view {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 2px;
+    &> table{
+        width: 100%;
+        table-layout: fixed;
+
+        & .ant-descriptions-row{
+            &>.result_td{
+                padding-top:5px;
+                padding-bottom:20px;
+                display: table-cell;
+                    color: rgba(0, 0, 0, 0.65);
+                    font-size: 14px;
+                    line-height: 1.66667;
+            }
+            &:last-of-type{
+                &>.result_td{
+                    padding-top: 5px;
+                    padding-bottom: 0px;
+                }
+            
+                &:last-child{
+                    border-bottom: none;
+                }
+            }
+            &>.ant-descriptions-item{
+                &>.ant-descriptions-item-label{
+                    color: rgba(0, 0, 0, 0.85);
+                    font-weight: normal;
+                    font-size: 12px;
+                    vertical-align: top;
+                    display: flex;
+                    align-items: center;
+                }
+            }
+        }
+    }
+  }
+
+
+  .svg{
+    padding-bottom:1px;
+    margin-right:5px;
+}

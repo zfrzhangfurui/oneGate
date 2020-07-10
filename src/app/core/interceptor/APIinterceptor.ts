@@ -1,5 +1,5 @@
 import { HttpInterceptor, HttpEvent, HttpRequest, HttpHandler, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 // import { IvoryError, IvoryUnauthorizedError } from '../error';
 import { Inject, PLATFORM_ID, Optional, Injectable } from '@angular/core';
@@ -47,6 +47,9 @@ export class APIInterceptor implements HttpInterceptor {
             // catchError(
             //     e => {
             //         console.log(e);
+            //         return next.handle(clonedReq);
+            //         // return clonedReq;
+
             //         // if (e instanceof HttpErrorResponse) {
             //         //     if(e.status==401){
             //         //         return throwError(new IvoryUnauthorizedError())

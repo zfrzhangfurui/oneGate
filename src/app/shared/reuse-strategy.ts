@@ -24,9 +24,10 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
   //   "book-browsing-table",
   //   "book-member",
   // ];
-  private acceptedRoutes: string[] = [
-    "arts-review"
-  ];
+  // private acceptedRoutes: string[] = [
+  //   "arts-review"
+  // ];
+  private acceptedRoutes: string[] = [];
   /**
    * Object which will store RouteStorageObjects indexed by keys
    * The keys will all be a path (as in route.routeConfig.path)

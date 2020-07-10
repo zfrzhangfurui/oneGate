@@ -1,6 +1,6 @@
 <ul nz-menu nzMode="inline">
-    <li nz-submenu nzTitle="审核管理" nzIcon="alert">
-        <ul>
+    <li nz-submenu nzTitle="审核管理">
+        <ul>˜
             <li nz-menu-item nzTitle="作品审核" [routerLink]="['/index/review/arts-review']"
                 routerLinkActive="router-link-active">
                 作品审核
@@ -14,25 +14,12 @@
     </li>
     <li nz-submenu nzTitle="内容管理">
         <ul>
-            <li nz-menu-item nzTitle="用户列表" [routerLink]="['/index/goods','product']"
+            <li nz-menu-item nzTitle="用户列表" [routerLink]="['/index/goods/goods-published']"
                 routerLinkActive="router-link-active">
                 已发布作品
             </li>
 
-            <li nz-menu-item nzTitle="用户列表" [routerLink]="['/index/goods','deleteArts']"
-                routerLinkActive="router-link-active">
-                已删除作品
-            </li>
-            <li nz-menu-item nzTitle="用户列表" [routerLink]="['/index/goods','onStage']"
-                routerLinkActive="router-link-active">
-                已上架作品
-            </li>
-            <li nz-menu-item nzTitle="用户列表" [routerLink]="['/index/goods','forSale']"
-                routerLinkActive="router-link-active">
-                已出售作品
-            </li>
-            <li nz-menu-item nzTitle="用户列表" [routerLink]="['/index/goods','deleteGoods']"
-                routerLinkActive="router-link-active">
+            <li nz-menu-item nzTitle="用户列表" [routerLink]="['/index/goods']" routerLinkActive="router-link-active">
                 已删除作品
             </li>
         </ul>

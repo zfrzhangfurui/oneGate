@@ -1,0 +1,29 @@
+<section>
+    <div class="nav">
+        <div class="nav-left">
+            <button nz-button>返回</button>
+            <p>用户管理-违规记录</p>
+        </div>
+        <button nz-button>撤销审核结果</button>
+    </div>
+
+    <div class="content">
+        <div class="title">
+            <p>举报审核结果</p>
+        </div>
+        <div>
+
+            <nz-descriptions [nzColumn]="3" nzBordered nzLayout="vertical">
+                <nz-descriptions-item nzTitle="审核用户">
+                    用户ABC
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="审核时间">2020-10-10</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="审核结果">封禁3天并删除作品
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="违规编号">21321321</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="违规原因">你因为发布广告信息被封禁</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="违规内容">其他违规</nz-descriptions-item>
+            </nz-descriptions>
+        </div>
+    </div>
+</section>

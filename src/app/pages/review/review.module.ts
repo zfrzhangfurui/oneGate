@@ -1,35 +1,20 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes, RouteReuseStrategy } from '@angular/router';
 import { CustomReuseStrategy } from '../../shared/reuse-strategy';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
 import { ReviewPage } from './review.page';
 import { ArtsReviewPage } from './arts-review/arts-review.page';
 import { ReviewDetailPage } from './review-detail/review-detail.page';
+import { ModalPage } from './review-modal/modal.page';
 /********************************************************************/
-import { NzLayoutModule } from "ng-zorro-antd/layout";
-import { NzTableModule } from "ng-zorro-antd/table";
-import { NzPaginationModule } from 'ng-zorro-antd/pagination';
-import { NzDividerModule } from "ng-zorro-antd/divider";
-import { NzButtonModule } from "ng-zorro-antd/button";
-import { NzIconModule } from "ng-zorro-antd/icon";
-import { NzInputModule } from "ng-zorro-antd/input";
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-import { NzFormModule } from "ng-zorro-antd/form";
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
-import { NzModalModule } from 'ng-zorro-antd/modal';
-import { NzMenuModule } from 'ng-zorro-antd/menu';
-import { NzTagModule } from 'ng-zorro-antd/tag';
-import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { SharedModule } from '../../shared/shared.module';
 import { IconDefinition } from '@ant-design/icons-angular';
 import { ReactiveComponentModule } from '../../core/reactive/reactive-component.module';
 import { AccountBookFill, AlertFill, AlertOutline, SnippetsOutline, CopyrightOutline, FileImageOutline, FileTextOutline, TagsOutline, ArrowsAltOutline } from '@ant-design/icons-angular/icons';
 import { OnlyLoggedInUserGuard } from '../../core/guard/only-logged-in.guard';
 import { OnlyNumberDirective } from '../../shared/only-number.directive';
+import { SelectModule } from '../../core/custom-select/select.module';
+import { FzDesignModule } from '../../core/custom-component/fz-design.module';
+
 const icons: IconDefinition[] = [,
     AccountBookFill, AlertOutline, AlertFill, SnippetsOutline, CopyrightOutline, FileImageOutline, FileTextOutline, TagsOutline, ArrowsAltOutline];
 @NgModule({
@@ -37,29 +22,14 @@ const icons: IconDefinition[] = [,
         OnlyNumberDirective,
         ReviewPage,
         ArtsReviewPage,
-        ReviewDetailPage
+        ReviewDetailPage,
+        ModalPage
     ],
     imports: [
-        CommonModule,
-        // HttpClientModule,
-        NzLayoutModule,
-        NzTableModule,
-        NzPaginationModule,
-        NzDividerModule,
-        NzButtonModule,
-        NzIconModule.forChild(icons),
-        NzInputModule,
-        NzDatePickerModule,
-        NzFormModule,
-        NzSelectModule,
-        NzRadioModule,
-        NzGridModule,
-        NzDescriptionsModule,
-        NzModalModule,
-        NzMenuModule,
-        NzTagModule,
-        NzAlertModule,
+        SelectModule,
+        SharedModule,
         ReactiveComponentModule,
+        FzDesignModule,
         RouterModule.forChild([{
             path: '',
             component: ReviewPage,
@@ -76,14 +46,13 @@ const icons: IconDefinition[] = [,
                     component: ArtsReviewPage
                 },
                 {
-                    path: 'arts-review/:workid',
+                    path: 'arts-review/:workid/:submittype/:version/:mode',
                     //   canActivate: [OnlyLoggedInUserGuard],
                     component: ReviewDetailPage
                 }
             ]
         }]),
 
-        ReactiveFormsModule,
     ],
     providers: [{ provide: RouteReuseStrategy, useClass: CustomReuseStrategy }],
 })

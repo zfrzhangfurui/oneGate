@@ -1,4 +1,4 @@
-<section *ngrxLet="param$; let data">
+<section *ngrxLet="param$; let data" class="section-detail">
     <div class="title">
         <div class="title-left">
             <button nz-button nzType="primary" (click)="backToList()"><i nz-icon nzType="left"></i>返回</button>
@@ -6,11 +6,11 @@
         </div>
         <div>
             <div *ngIf="status === 0">
-                <button nz-button nzType="danger">封禁用户</button>
+                <button nz-button nzType="danger" (click)="onBanUser('UserBanned',data)">封禁用户</button>
             </div>
 
             <div *ngIf="status === 1">
-                <button nz-button nzType="primary">解封用户</button>
+                <button nz-button nzType="primary" (click)="onReleaseUser('UserBannedRelease',data)">解封用户</button>
             </div>
         </div>
     </div>
@@ -74,7 +74,8 @@
                 </nz-descriptions-item>
                 <nz-descriptions-item nzTitle="封禁理由">{{data.state.description}}</nz-descriptions-item>
                 <nz-descriptions-item nzTitle="封禁记录">
-                    <a (click)="createComponentModal('BannedRecord',[])">封禁记录</a>
+                    <!-- createComponentModal(modalType:Modal, content:any, layout:[width:number, height:string]) -->
+                    <a (click)="createComponentModal('BannedRecord',data.base_info.uid,[1000,'600px'])">封禁记录</a>
                 </nz-descriptions-item>
             </nz-descriptions>
 
@@ -97,4 +98,98 @@
             </nz-descriptions>
         </div>
     </div>
+</section>
+
+<section class="section-arts">
+    <div class="nav">
+        <nz-radio-group nzButtonStyle="solid">
+            <label nz-radio-button class="review__menu-nav-button" [nzValue]="0">登录记录</label>
+            <label nz-radio-button class="review__menu-nav-button" [nzValue]="1">已发布作品</label>
+            <label nz-radio-button class="review__menu-nav-button" [nzValue]="2">待审核作品</label>
+            <label nz-radio-button class="review__menu-nav-button" [nzValue]="3">审核失败作品</label>
+        </nz-radio-group>
+    </div>
+
+    <div class="searchbar">
+
+        <div nz-row [nzGutter]="8" nzJustify="space-around">
+
+            <div class="searchbar-div" nz-col nzSpan="4">
+                <label>作品ID：</label>
+
+                <input nz-input OnlyNumber="true" class="review__menu-searchbar-item_input" placeholder="请输入" />
+            </div>
+            <div class="searchbar-div" nz-col nzSpan="4">
+                <label>作品名称：</label>
+                <input nz-input class="review__menu-searchbar-item_input" placeholder="请输入" />
+            </div>
+            <div class="searchbar-div" nz-col nzSpan="6">
+                <div>
+                    <label>开始时间</label>
+                    -
+                    <label>结束时间</label>
+                </div>
+                <div>
+                    <nz-date-picker class="date-input" nzFormat="yyyy/MM/dd" nzPlaceHolder="Select Time" name="st">
+                    </nz-date-picker>
+                    --
+                    <nz-date-picker class="date-input" nzFormat="yyyy/MM/dd" nzPlaceHolder="Select Time" name="et">
+                    </nz-date-picker>
+                </div>
+            </div>
+            <div class="searchbar-div" nz-col nzSpan="4">
+                <label>作品类型：</label>
+                <nz-select class="item_input">
+                    <nz-option [nzValue]="-1" nzLabel="全部"></nz-option>
+                    <nz-option [nzValue]="0" nzLabel="Live2D"></nz-option>
+                    <nz-option [nzValue]="1" nzLabel="立绘"></nz-option>
+                </nz-select>
+            </div>
+            <div class="searchbar-div" nz-col nzSpan="4">
+                <label>作品分类：</label>
+                <nz-select class="item_input">
+                    <nz-option [nzValue]="-1" nzLabel="全部"></nz-option>
+                    <nz-option [nzValue]="0" nzLabel="作品"></nz-option>
+                    <nz-option [nzValue]="1" nzLabel="商品"></nz-option>
+                    <nz-option [nzValue]="2" nzLabel="出售过的商品"></nz-option>
+                </nz-select>
+            </div>
+        </div>
+        <div class="searchbar-confirm">
+            <button nz-button nzType="primary">
+                <i nz-icon nzType="search"></i>搜索
+            </button>
+            <button nz-button nzType="default" role="button">
+                <i nz-icon nzType="close"></i>重置
+            </button>
+        </div>
+    </div>
+    <nz-table class="table" #basicTable [nzData]="tableData$ | async" [nzFrontPagination]="false" [nzTotal]="total"
+        [nzPageSize]="tableConfig.pageSize" [nzPageIndex]="tableConfig.pageIndex" [nzLoading]="tableLoadingToggle"
+        (nzQueryParams)="onQueryParamsChange($event)" [nzShowQuickJumper]="true">
+        <thead>
+            <tr>
+                <th>作品ID</th>
+                <th>作品名称</th>
+                <th>提交用户</th>
+                <th>提交时间</th>
+                <th>作品分类</th>
+                <th>作品类型</th>
+                <th>附件内容</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of basicTable.data">
+                <td>123</td>
+                <td>123</td>
+                <td>123</td>
+                <td>
+                    123
+                </td>
+                <td>123</td>
+                <td>123</td>
+            </tr>
+        </tbody>
+    </nz-table>
 </section>

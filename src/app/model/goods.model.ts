@@ -23,3 +23,8 @@ export interface TableConfig {
     pageIndex: number,
     pageSize: number,
 }
+
+export interface TableData {
+    count: number,
+    list: []
+}

@@ -1,138 +1,301 @@
-<section>
-    <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
-        [nzFooter]="modalFooter">
-        <div *ngIf="modalMode === 'modalAccept'">
-            <p>审核通过</p>
-            <p>是否确认审核通过？</p>
-            <p>审核通过后无法撤回，请谨慎操作。</p>
-        </div>
-        <div *ngIf="modalMode === 'modalDecline'">
-            <p>审核拒绝</p>
-            <textarea class="modalDeclineInput" #declineInput></textarea>
-        </div>
-        <div *ngIf="modalMode === 'modalResult'">
-            <p *ngIf="requestExecuteStatus.success">审核更改成功</p>
-            <p *ngIf="requestExecuteStatus.fail">审核失败<br />
-                错误码：{{errorMessage}}
-            </p>
-        </div>
-        <ng-template #modalFooter>
-            <div *ngIf="!requestExecuteStatus.success">
-                <button nz-button nzType="default" (click)="handleCancel()">返回</button>
-                <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isModalLoading">确认</button>
-            </div>
-            <div *ngIf="requestExecuteStatus.fail">
-                <button nz-button nzType="primary" (click)="handleCancel()">确认</button>
-            </div>
-        </ng-template>
-
-    </nz-modal>
-
+<main *ngrxLet="userInfo$;let data">
     <div class="detail-title">
         <div class="detail-title-left">
             <button nz-button nzType="primary" (click)="backTolist()"><i nz-icon nzType="left"></i>返回</button>
             <p>审核管理-作品审核</p>
         </div>
-        <div *ngIf="auditType === 'auditPending'">
+        <div *ngIf="data.modalToggle === 0;else cancelPublish">
             <button class="first-button" nz-button nzType="primary"
-                (click)="showAuditModal('modalAccept')">审核通过</button>
-            <button nz-button nzType="primary" (click)="showAuditModal('modalDecline')">审核拒绝</button>
+                (click)="createComponentModal('auditAccepted',[data.workid])">审核通过</button>
+            <button nz-button nzType="primary"
+                (click)="createComponentModal('auditDeclined',[data.workid])">审核拒绝</button>
         </div>
-        <div *ngIf="auditType === 'auditAccepted'">
-            <button nz-button nzType="primary" (click)="showAuditModal('modalCancelPublish')">撤销发布</button>
-        </div>
+        <ng-template #cancelPublish>
+            <div *ngIf="data.modalToggle === 1">
+                <button nz-button nzType="primary"
+                    (click)="createComponentModal('cancelPublish',[data.workid])">撤销发布</button>
+            </div>
+        </ng-template>
     </div>
 
-    <div class="review-officer" *ngIf="auditType === 'auditAccepted'">
-        <div class="review-officer-title">审核信息</div>
-        <nz-descriptions class="review-officer-content" [nzColumn]="4" *ngFor="let item of artWorkInfo.auditlist">
-            <nz-descriptions-item nzTitle="审核人">{{item.username}}</nz-descriptions-item>
-            <nz-descriptions-item nzTitle="审核时间">{{moment(item.audittime).format("YYYY/MM/DD")}}</nz-descriptions-item>
-            <nz-descriptions-item nzTitle="审核结果">{{item.check_state === 1? '审核通过':'审核拒绝'}}</nz-descriptions-item>
-            <nz-descriptions-item nzTitle="拒绝理由">{{item.description}}</nz-descriptions-item>
-        </nz-descriptions>
-    </div>
-    <div class="review-information">
-        <div class="review-information-title">基础信息</div>
-        <div class="review-information-content">
-            <nz-descriptions [nzColumn]="4">
-                <nz-descriptions-item nzTitle="作品名称">{{artWorkInfo.baseinfo.name}}</nz-descriptions-item>
-                <nz-descriptions-item nzTitle="作品ID">{{workid}}</nz-descriptions-item>
-                <nz-descriptions-item nzTitle="发布用户">{{artWorkInfo.baseinfo.author_name}}</nz-descriptions-item>
-                <nz-descriptions-item nzTitle="用户ID">{{artWorkInfo.baseinfo.author_id}}</nz-descriptions-item>
-            </nz-descriptions>
-
-            <nz-descriptions [nzColumn]="4">
-                <nz-descriptions-item nzTitle="提交时间">{{moment(artWorkInfo.baseinfo.publishtime).format("YYYY/MM/DD")}}
-                </nz-descriptions-item>
-                <nz-descriptions-item nzTitle="作品分类">
-                    {{artWorkInfo.baseinfo.type === 0? 'Live2D':'原画'}}
-                </nz-descriptions-item>
-                <nz-descriptions-item nzTitle="作品类型" [ngSwitch]="artWorkInfo.baseinfo.state">
-                    <ng-container *ngSwitchCase="0">仅展示</ng-container>
-                    <ng-container *ngSwitchCase="1">未出售</ng-container>
-                    <ng-container *ngSwitchCase="2">已出售</ng-container>
-                </nz-descriptions-item>
-                <nz-descriptions-item nzTitle="出售价格">{{artWorkInfo.baseinfo.price}}</nz-descriptions-item>
-            </nz-descriptions>
-        </div>
-    </div>
-
-    <div class="details">
-        <div class="detail-title">
-
-            详细信息
+    <div class="review-officer" *ngIf="data.work2.hasOwnProperty('audituserid')">
+        <fz-title title="审核信息"></fz-title>
+        <div class="officer-div">
+            <fz-descriptions col="4">
+                <fz-descriptions-item fzIcon="infoCircle" title="审核编号" [fzStateToggle]="false">{{data.work2.id}}
+                </fz-descriptions-item>
+                <fz-descriptions-item fzIcon="user" title="审核人" [fzStateToggle]="false">{{data.work2.auditusername}}
+                </fz-descriptions-item>
+                <fz-descriptions-item fzIcon="timeCircle" title="审核时间" [fzStateToggle]="false">
+                    {{moment(data.work2.audittime).format('YYYY/MM/DD')}}</fz-descriptions-item>
+                <fz-descriptions-item fzIcon="batchFolding" title="审核结果" [fzStateToggle]="false">
+                    {{data.work2.auditresult}}
+                </fz-descriptions-item>
+                <fz-descriptions-item fzIcon="batchFolding" title="拒绝理由" [fzStateToggle]="false">
+                    {{data.work2.auditresult}}
+                </fz-descriptions-item>
+            </fz-descriptions>
         </div>
 
-        <div class="details-intro">
-            <div>
-                <p class="details-intro-p">
-                    <i nz-icon nzType="snippets" nzTheme="outline"></i>
-                    作品介绍
-                </p>
-            </div>
-            <div class="details-intro-content">
-                {{artWorkInfo.baseinfo.description}}
-            </div>
-            <div>
-                <i nz-icon nzType="copyright" nzTheme="outline"></i>
-                版权声明
-            </div>
-            <div>
-                {{artWorkInfo.baseinfo.copyright}}
-            </div>
-            <div class="image-upload">
-                <i nz-icon nzType="file-image" nzTheme="outline"></i>
-                上传图片</div>
-            <div class="details-image">
-                <img *ngFor="let item of artWorkInfo.baseinfo.assets" [src]="item">
+    </div>
+    <section class="work-detail-section">
+        <div class="section-left" [ngClass]="{'left-extend': !data.splitView,'left-split': data.splitView}">
+            <div class="review-information">
+                <fz-title title="基础信息"></fz-title>
+                <!-- <div class="review-information-title">基础信息</div> -->
+                <div class="review-information-content">
+
+                    <fz-descriptions [col]="!data.splitView? 4:2 ">
+                        <fz-descriptions-item fzIcon="batchFolding" title="作品名称" [fzStateToggle]="false"
+                            fzStateIcon="new">
+                            {{data.work1.name}}
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="infoCircle" title="作品ID" [fzStateToggle]="false">
+                            {{data.workid}}
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="user" title="发布用户" [fzStateToggle]="false">
+                            {{data.work1.author_name}}
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="user" title="用户ID" [fzStateToggle]="false">
+                            {{data.work1.author_id}}
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="timeCircle" title="提交时间" [fzStateToggle]="false">
+                            {{moment(data.work1.submittime).format('YYYY/MM/DD')}}
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="detail" title="作品分类" [fzStateToggle]="false"
+                            [ngSwitch]="data.work1.category">
+
+                            <!-- <span [ngSwitch]="data.work1.category">
+                                <span *ngSwitchCase="0">output</span>
+                                <span *ngSwitchCase="1">output2</span>
+                            </span> -->
+                            <span *ngSwitchCase="0">live2d</span>
+                            <span *ngSwitchCase="1">原画</span>
+                        </fz-descriptions-item>
+                    </fz-descriptions>
+                </div>
             </div>
 
-            <div class="details-download">
-                <p class="title">
-                    <i nz-icon nzType="file-text" nzTheme="outline"></i>
-                    源文件</p>
-                <div class="download">
-                    <a [href]="item" *ngFor="let item of artWorkInfo.baseinfo.assets">{{item}}</a>
+            <div class="details">
+                <div class="detail-title">
+                    <fz-title title="作品详细信息"></fz-title>
+                </div>
 
-                    <!-- <a [href]="item" *ngFor="let item of artWorkInfo.baseinfo.assets">{{item}}</a> -->
+                <div class="details-intro">
+                    <fz-descriptions col="1">
+                        <fz-descriptions-item fzIcon="batchFolding" title="作品介绍" [fzStateToggle]="false">
+                            {{data.work1.description}}
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="tag" title="版权声明" [fzStateToggle]="false"
+                            [ngSwitch]="data.work1.copyright">
+                            <span *ngSwitchCase="0">原创</span>
+                            <span *ngSwitchCase="1">非原创</span>
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="tag" title="标签" [fzStateToggle]="false">
+                            <nz-tag *ngFor="let item of data.work1.tagArray">
+                                {{item}}
+                            </nz-tag>
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="image" title="封面图">
+                            <div style="width: 30%;padding-top: 30%;position: relative;">
+                                <img [src]="data.work1.cover"
+                                    style="position: absolute;top:0;left:0;width: 100%;height:100%">
+
+                            </div>
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="fileImage" [title]="data.work1.category === 0? 'live2D模型':'上传图片'">
+                            <a *ngIf="data.work1.category === 0"
+                                [href]="data.work1.file">下载模型文件(大约{{(data.work1.file_size/1000/1000).toFixed(1)}}M)</a>
+                            <div
+                                style="display: flex;flex-direction: row;justify-content:flex-start;width: 100%;flex-wrap: wrap;">
+                                <div style="position: relative;width: 25%;padding-top: 20%;margin-right: 10px;margin-top: 10px;"
+                                    *ngFor="let item of data.work1.assets">
+                                    <img [src]="item"
+                                        style="position: absolute;top:0;left:0;width: 100%;height: 100%;" />
+                                </div>
+
+
+                                <!-- <fz-image *ngFor="let item of data.work1.assets" [url]="item"
+                                    style="position: relative;width:25%;padding-top: 20%;margin-right: 10px;margin-top:10px;">
+                                </fz-image> -->
+
+                            </div>
+                        </fz-descriptions-item>
+                    </fz-descriptions>
                 </div>
 
             </div>
+        </div>
+        <div class="section-right" *ngIf="data.splitView">
+            <div class="review-information">
+                <fz-title title="基础信息"></fz-title>
+                <div class="review-information-content">
+                    <fz-descriptions col="2">
+                        <fz-descriptions-item fzIcon="batchFolding" title="作品名称" [fzStateToggle]="!data.changeLog.name"
+                            fzStateIcon="new">
+                            {{data.work2.name}}
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="infoCircle" title="作品ID" [fzStateToggle]="false">{{data.workid}}
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="user" title="发布用户" [fzStateToggle]="false">
+                            {{data.work2.author_name}}
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="user" title="用户ID" [fzStateToggle]="false">
+                            {{data.work2.author_id}}
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="timeCircle" title="提交时间" [fzStateToggle]="false">
+                            {{moment(data.work2.submittime).format('YYYY/MM/DD')}}
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="detail" title="作品分类" [fzStateToggle]="false"
+                            [ngSwitch]="data.work2.category">
+                            <span *ngSwitchCase="0">live2d</span>
+                            <span *ngSwitchCase="1">原画</span>
+                        </fz-descriptions-item>
+                    </fz-descriptions>
 
-            <div class="tag">
-                <p class="title">
-                    <i nz-icon nzType="tags" nzTheme="outline"></i>
-                    标签
-                </p>
-
-                <div>
-                    <nz-tag *ngFor="let item of artWorkInfo.baseinfo.tag">{{item.name}}</nz-tag>
                 </div>
             </div>
-            <div>封面图</div>
-            <img class="cover-image" [src]="artWorkInfo.baseinfo.cover">
+
+            <div class="details">
+                <div class="detail-title">
+
+                    <fz-title title="作品详细信息"></fz-title>
+                </div>
+
+                <div class="details-intro">
+
+                    <fz-descriptions col="1">
+                        <fz-descriptions-item fzIcon="batchFolding" title="作品介绍"
+                            [fzStateToggle]="!data.changeLog.description" fzStateIcon="new">
+                            {{data.work2.description}}
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="tag" title="版权声明" [fzStateToggle]="false"
+                            [ngSwitch]="data.work1.copyright">
+                            <span *ngSwitchCase="0">原创</span>
+                            <span *ngSwitchCase="1">非原创</span>
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="tag" title="标签" [fzStateToggle]="!data.changeLog.tag"
+                            fzStateIcon="new">
+                            <nz-tag *ngFor="let item of data.work2.tagArray">
+                                {{item}}
+                            </nz-tag>
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="image" title="封面图">
+                            <div style="width: 30%;padding-top: 30%;position: relative;">
+                                <img [src]="data.work2.cover"
+                                    style="position: absolute;top:0;left:0;width: 100%;height:100%">
+                            </div>
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="fileImage" [title]="data.work2.category === 0? 'live2D模型':'上传图片'">
+                            <a *ngIf="data.work2.category === 0"
+                                [href]="data.work2.file">下载模型文件(大约{{(data.work2.file_size/1000/1000).toFixed(1)}}M)</a>
+                            <div style="display: flex;justify-content: flex-start;width: 100%;">
+                                <div style="position: relative;width: 25%;padding-top: 20%;margin-right: 10px;"
+                                    *ngFor="let item of data.work2.assets">
+                                    <img [src]="item"
+                                        style="position: absolute;top:0;left:0;width: 100%;height: 100%;" />
+                                </div>
+                            </div>
+                        </fz-descriptions-item>
+                    </fz-descriptions>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="cooperate-section" *ngIf="data.coopwork !== null">
+        <fz-title title="合作作品"></fz-title>
+        <div class="cooperate-description">
+            <fz-descriptions [col]="4">
+                <fz-descriptions-item fzIcon="batchFolding" title="作品名称" [fzStateToggle]="false">{{data.coopwork.name}}
+                </fz-descriptions-item>
+                <fz-descriptions-item fzIcon="infoCircle" title="作品ID" [fzStateToggle]="false">{{data.coopwork.workid}}
+                </fz-descriptions-item>
+                <fz-descriptions-item fzIcon="user" title="发布用户" [fzStateToggle]="false">{{data.coopwork.username}}
+                </fz-descriptions-item>
+                <fz-descriptions-item fzIcon="user" title="用户ID" [fzStateToggle]="false">{{data.coopwork.uid}}
+                </fz-descriptions-item>
+                <fz-descriptions-item fzIcon="user" title="合作状态" [fzStateToggle]="false">
+                    <span [ngSwitch]="data.coopwork.state">
+                        <span *ngSwitchCase="0">待合作</span>
+                        <span *ngSwitchCase="1">已合作</span>
+                        <span *ngSwitchCase="2">拒绝</span>
+                    </span>
+
+                </fz-descriptions-item>
+                <fz-descriptions-item fzIcon="user" title="收益分成" [fzStateToggle]="false">
+                    作者：{{data.coopwork.share*100}}%, 合作者：{{(1-data.coopwork.share)*100}}%
+                </fz-descriptions-item>
+            </fz-descriptions>
         </div>
 
-    </div>
-</section>
+    </section>
+
+    <section class="goods-info" *ngIf="data.work1.goods.length !== 0">
+        <div class="goods-left" [ngClass]="{'left-extend': !data.splitView,'left-split': data.splitView}">
+            <div class="goods-item" *ngFor="let item of data.work1.goods;index as i">
+                <fz-title [title]="'商品信息-' + i + 1">
+                </fz-title>
+                <div class="goods-item-content">
+
+                    <fz-descriptions [col]="!data.splitView? 4:2 ">
+                        <fz-descriptions-item fzIcon="infoCircle" title="商品ID" [fzStateToggle]="false">
+                            {{item.id}}
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="batchFolding" title="商品名称" [fzStateToggle]="false"
+                            fzStateIcon="new">
+                            {{item.name}}
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="user" title="出售类型" [fzStateToggle]="false">
+                            <span [ngSwitch]="item.maxstock">
+                                <span *ngSwitchCase="-1">不限量</span>
+                                <span *ngSwitchCase="1">一个</span>
+                            </span>
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="user" title="商品价格" [fzStateToggle]="false">
+                            {{item.price}}
+                        </fz-descriptions-item>
+
+                        <fz-descriptions-item fzIcon="timeCircle" title="可下载内容" [fzStateToggle]="false">
+                            <a [href]="item.file">下载附件</a>
+                        </fz-descriptions-item>
+                    </fz-descriptions>
+                </div>
+            </div>
+        </div>
+        <div class="goods-right" *ngIf="data.splitView">
+            <div class="goods-item" *ngFor="let item of data.work2.goods;index as i">
+                <fz-title [title]="'商品信息-'+ i + 1" [iconToggle]="data.changeLog.goods[i].includes(false)" icon="new">
+                </fz-title>
+                <div class="goods-item-content">
+                    <fz-descriptions [col]="!data.splitView? 4:2 ">
+                        <fz-descriptions-item fzIcon="infoCircle" title="商品ID"
+                            [fzStateToggle]="!data.changeLog.goods[i][0]" fzStateIcon="new">
+                            {{item.id}}
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="batchFolding" title="商品名称"
+                            [fzStateToggle]="!data.changeLog.goods[i][1]" fzStateIcon="new">
+                            {{item.name}}
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="user" title="出售类型" [fzStateToggle]="!data.changeLog.goods[i][2]"
+                            fzStateIcon="new">
+                            <span [ngSwitch]="item.maxstock">
+                                <span *ngSwitchCase="-1">不限量</span>
+                                <span *ngSwitchCase="1">一个</span>
+                            </span>
+                        </fz-descriptions-item>
+                        <fz-descriptions-item fzIcon="user" title="商品价格" [fzStateToggle]="!data.changeLog.goods[i][3]"
+                            fzStateIcon="new">
+                            {{item.price}}
+                        </fz-descriptions-item>
+
+                        <fz-descriptions-item fzIcon="timeCircle" title="可下载内容" [fzStateToggle]="false">
+                            <a [href]="item.file">下载附件</a>
+                        </fz-descriptions-item>
+                    </fz-descriptions>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

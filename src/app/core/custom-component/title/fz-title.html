@@ -1,0 +1,10 @@
+<div class="fz-title-view">
+    {{title}}
+    <ng-container *ngIf="iconToggle">
+        <span *ngIf="icon !== 'none'">
+            <object class="svg" width="30px" height="15px" fzIcon [iconType]="icon" style="margin-left: 10px;"
+                type="image/svg+xml" codebase="http://www.adobe.com/svg/viewer/imstall/">
+            </object>
+        </span>
+    </ng-container>
+</div>

@@ -8,14 +8,13 @@ nz-content {
     background-color: #5584FF;height: 50px;
   }
 
-.collapsed{
-    width:100%;
-    display: flex;
-    justify-content: flex-end;
-    &>.collapsed-button{
-      
-    }
-  }
  
-
+.inner-layout{
+  position: relative;
+  & .collapsed-button{
+    position: absolute;
+    top:0;
+    left: 0;
+  }
+}
 

@@ -1,27 +1,10 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
+import { SharedModule } from '../../shared/shared.module';
 /********************************************************************/
-import { NzLayoutModule } from "ng-zorro-antd/layout";
-import { NzTableModule } from "ng-zorro-antd/table";
-import { NzDividerModule } from "ng-zorro-antd/divider";
-import { NzButtonModule } from "ng-zorro-antd/button";
-import { NzIconModule } from "ng-zorro-antd/icon";
-import { NzInputModule } from "ng-zorro-antd/input";
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-import { NzFormModule } from "ng-zorro-antd/form";
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
-import { NzModalModule } from 'ng-zorro-antd/modal';
-import { NzMenuModule } from 'ng-zorro-antd/menu';
-import { NzTagModule } from 'ng-zorro-antd/tag';
 import { OnlyLoggedInUserGuard } from '../../core/guard/only-logged-in.guard';
 /********************************************************************/
-import { GoodsPage } from './goods/goods.page';
+import { GoodsPublishedPage } from './goods/goods-published.page';
 import { IconDefinition } from '@ant-design/icons-angular';
 import { AccountBookFill, AlertFill, AlertOutline, SnippetsOutline, CopyrightOutline, FileImageOutline, FileTextOutline, TagsOutline, ArrowsAltOutline } from '@ant-design/icons-angular/icons';
 import { ReactiveComponentModule } from '../../core/reactive/reactive-component.module';
@@ -31,37 +14,19 @@ const icons: IconDefinition[] = [,
 
 @NgModule({
     declarations: [
-        GoodsPage,
+        GoodsPublishedPage,
         GoodsDetailPage
     ],
     imports: [
-        CommonModule,
-        NzLayoutModule,
-        NzTableModule,
-        NzDividerModule,
-        NzButtonModule,
-        NzIconModule,
-        NzInputModule,
-        NzDatePickerModule,
-        NzFormModule,
-        NzSelectModule,
-        NzRadioModule,
-        NzGridModule,
-        NzDescriptionsModule,
-        NzModalModule,
-        NzMenuModule,
-        NzTagModule,
+        SharedModule,
         ReactiveComponentModule,
         RouterModule.forChild(
             [
-                { path: '', redirectTo: '', pathMatch: 'full' },
-                { path: ':type', component: GoodsPage },
-                { path: 'goods-detail/:id', component: GoodsDetailPage }
+                { path: '', redirectTo: 'goods-published', pathMatch: 'full' },
+                { path: 'goods-published', component: GoodsPublishedPage },
+                // { path: 'goods-detail/:id', component: GoodsDetailPage }
             ]
         ),
-
-        ReactiveFormsModule,
-        FormsModule
     ]
 })
 export class GoodsModule { }

@@ -1,19 +1,19 @@
-<main>
+<main *ngrxLet="data$; let data">
     <nav>
         <div class="nav-left">
             <button nz-button nzType="primary">返回</button>
             <p>用户管理-举报记录</p>
         </div>
         <div class="nav-right">
-            <div class="right-button">
-                <button nz-button>无违规</button>
-                <button nz-button>违规处理</button>
+            <div class="right-button" *ngIf="data.audit_state === 0">
+                <button nz-button (click)="onReportNonViolation('ReportNoneViolation',[])">无违规</button>
+                <button nz-button (click)="onReportViolation('ReportViolation',[])">违规处理</button>
             </div>
-            <ng-template>
-                <div>
-                    <button nz-button>撤销违规</button>
-                </div>
-            </ng-template>
+
+            <div *ngIf="data.audit_state === 2">
+                <button nz-button>撤销违规</button>
+            </div>
+
         </div>
     </nav>
     <section>
@@ -45,17 +45,23 @@
                 <p>基础信息</p>
             </div>
             <div>
-                <nz-descriptions [nzColumn]="3" nzBordered nzLayout="vertical">
-                    <nz-descriptions-item nzTitle="审核用户">
+                <nz-descriptions [nzColumn]="4" nzBordered nzLayout="vertical">
+                    <nz-descriptions-item nzTitle="举报用户">
                         用户ABC
                     </nz-descriptions-item>
-                    <nz-descriptions-item nzTitle="审核时间">
+                    <nz-descriptions-item nzTitle="举报用户ID">
                         用户ABC
                     </nz-descriptions-item>
-                    <nz-descriptions-item nzTitle="审核结果">
+                    <nz-descriptions-item nzTitle="被举报用户">
                         用户ABC
                     </nz-descriptions-item>
-                    <nz-descriptions-item nzTitle="违规原因">
+                    <nz-descriptions-item nzTitle="被举报用户ID">
+                        用户ABC
+                    </nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="举报编号">
+                        用户ABC
+                    </nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="举报时间">
                         用户ABC
                     </nz-descriptions-item>
                 </nz-descriptions>
@@ -63,25 +69,31 @@
         </div>
     </section>
     <section>
-        <div>
-            <div class="title">
+        <div class="reason-div">
+            <div class="title reason-title">
                 <p>举报原因</p>
             </div>
-            <div>
-                <nz-descriptions [nzColumn]="3" nzBordered nzLayout="vertical">
-                    <nz-descriptions-item nzTitle="审核用户">
-                        用户ABC
-                    </nz-descriptions-item>
-                    <nz-descriptions-item nzTitle="审核时间">
-                        用户ABC
-                    </nz-descriptions-item>
-                    <nz-descriptions-item nzTitle="审核结果">
-                        用户ABC
-                    </nz-descriptions-item>
-                    <nz-descriptions-item nzTitle="违规原因">
-                        用户ABC
-                    </nz-descriptions-item>
-                </nz-descriptions>
+            <div class="content" [ngSwitch]="data.type">
+                <p>举报内容</p>
+                <p class="sub-content" *ngSwitchCase="0">用户</p>
+                <p class="sub-content" *ngSwitchCase="1">作品</p>
+                <p class="sub-content" *ngSwitchCase="2">合辑</p>
+                <p class="sub-content" *ngSwitchCase="3">根评论</p>
+                <p class="sub-content" *ngSwitchCase="4">子评论</p>
+            </div>
+            <div class="content">
+                <p>举报原因</p>
+                <p class="sub-content">恶意广告</p>
+            </div>
+            <div class="content">
+                <p>附件图片</p>
+                <div class="sub-content attachment">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
             </div>
         </div>
     </section>
@@ -91,17 +103,29 @@
                 <p>作品信息</p>
             </div>
             <div>
-                <nz-descriptions [nzColumn]="3" nzBordered nzLayout="vertical">
-                    <nz-descriptions-item nzTitle="审核用户">
+                <nz-descriptions [nzColumn]="4" nzBordered nzLayout="vertical">
+                    <nz-descriptions-item nzTitle="作品名称">
                         用户ABC
                     </nz-descriptions-item>
-                    <nz-descriptions-item nzTitle="审核时间">
+                    <nz-descriptions-item nzTitle="作品ID">
                         用户ABC
                     </nz-descriptions-item>
-                    <nz-descriptions-item nzTitle="审核结果">
+                    <nz-descriptions-item nzTitle="发布用户">
                         用户ABC
                     </nz-descriptions-item>
-                    <nz-descriptions-item nzTitle="违规原因">
+                    <nz-descriptions-item nzTitle="用户ID">
+                        用户ABC
+                    </nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="发布时间">
+                        用户ABC
+                    </nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="作品分类">
+                        用户ABC
+                    </nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="作品类型">
+                        用户ABC
+                    </nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="出售价格">
                         用户ABC
                     </nz-descriptions-item>
                 </nz-descriptions>

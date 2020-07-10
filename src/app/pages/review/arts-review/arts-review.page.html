@@ -1,26 +1,24 @@
-<main *ngrxLet="tableData$;let data;let err = $error">
+<!-- <main *ngrxLet="tableData$;let data;let err = $error"> -->
+<main>
     <section class="review__menu">
         <div class="review__menu-title">
             <p>审核管理-作品审核</p>
             <nz-alert nzType="error" [nzMessage]="'Error:'+ error+',未能连接服务器'" nzShowIcon *ngIf="err"></nz-alert>
         </div>
 
-        <form [formGroup]="form">
-            <div class="review__menu-nav">
-                <nz-radio-group formControlName="c" nzButtonStyle="solid">
-                    <label nz-radio-button class="review__menu-nav-button" (click)="changeMode(0)"
-                        [nzValue]="0">待审核</label>
-                    <label nz-radio-button class="review__menu-nav-button" (click)="changeMode(1)"
-                        [nzValue]="1">已通过</label>
-                    <label nz-radio-button class="review__menu-nav-button" (click)="changeMode(2)"
-                        [nzValue]="2">已拒绝</label>
-                </nz-radio-group>
 
-            </div>
+        <div class="review__menu-nav">
+            <nz-radio-group [(ngModel)]="mode" nzButtonStyle="solid">
+                <label nz-radio-button class="review__menu-nav-button" (click)="changeMode()" [nzValue]="0">待审核</label>
+                <label nz-radio-button class="review__menu-nav-button" (click)="changeMode()" [nzValue]="1">已通过</label>
+                <label nz-radio-button class="review__menu-nav-button" (click)="changeMode()" [nzValue]="2">已拒绝</label>
+            </nz-radio-group>
 
-            <div class="review__menu-searchbar">
+        </div>
 
-                <div nz-row [nzGutter]="8" nzJustify="space-around">
+        <div class="review__menu-searchbar">
+            <form [formGroup]="form">
+                <div nz-row [nzGutter]="24" nzJustify="start">
 
                     <div class="menu-searchbar-div" nz-col nzSpan="3">
                         <label>作品ID：</label>
@@ -40,9 +38,7 @@
                     </div>
                     <div class="menu-searchbar-div" nz-col nzSpan="6">
                         <div>
-                            <label>开始时间</label>
-                            -
-                            <label>结束时间</label>
+                            <label>提交时间：</label>
                         </div>
 
                         <div>
@@ -56,40 +52,32 @@
                         </div>
                     </div>
                     <div class="menu-searchbar-div" nz-col nzSpan="3">
-                        <label>作品类型：</label>
+                        <label>作品分类：</label>
                         <nz-select class="review__menu-searchbar-item_input" formControlName="t">
                             <nz-option [nzValue]="-1" nzLabel="全部"></nz-option>
                             <nz-option [nzValue]="0" nzLabel="Live2D"></nz-option>
-                            <nz-option [nzValue]="1" nzLabel="立绘"></nz-option>
-                        </nz-select>
-                    </div>
-                    <div class="menu-searchbar-div" nz-col nzSpan="3">
-                        <label>作品分类：</label>
-                        <nz-select class="review__menu-searchbar-item_input" formControlName="ta">
-                            <nz-option [nzValue]="-1" nzLabel="全部"></nz-option>
-                            <nz-option [nzValue]="0" nzLabel="作品"></nz-option>
-                            <nz-option [nzValue]="1" nzLabel="商品"></nz-option>
-                            <nz-option [nzValue]="2" nzLabel="出售过的商品"></nz-option>
+                            <nz-option [nzValue]="1" nzLabel="插画"></nz-option>
                         </nz-select>
                     </div>
                 </div>
-                <div class="review__menu-searchbar-confirm">
-                    <button nz-button nzType="primary" (click)="onSubmit()">
-                        <i nz-icon nzType="search"></i>搜索
-                    </button>
-                    <button nz-button nzType="default" role="button" (click)="onReset()">
-                        <i nz-icon nzType="close"></i>重置
-                    </button>
+            </form>
+            <div class="review__menu-searchbar-confirm">
+                <button nz-button nzType="primary" (click)="onSubmit()">
+                    <i nz-icon nzType="search"></i>搜索
+                </button>
+                <button nz-button nzType="default" role="button" (click)="onReset()">
+                    <i nz-icon nzType="close"></i>重置
+                </button>
 
 
 
-                </div>
             </div>
-        </form>
+        </div>
+
     </section>
     <section class="review__table-section">
-        <nz-table class="table" #basicTable [nzData]="data" [nzFrontPagination]="false" [nzTotal]="total"
-            [nzPageSize]="tablePageConfig.s" [nzPageIndex]="tablePageConfig.p" [nzLoading]="tableLoadingToggle"
+        <nz-table class="table" #basicTable [nzData]="tableData$ | async" [nzFrontPagination]="false" [nzTotal]="total"
+            [(nzPageSize)]="tablePageConfig.s" [(nzPageIndex)]="tablePageConfig.p" [nzLoading]="tableLoadingToggle"
             (nzQueryParams)="onQueryParamsChange($event)" [nzShowQuickJumper]="true">
             <thead>
                 <tr>
@@ -98,8 +86,6 @@
                     <th>提交用户</th>
                     <th>{{currentMode === 0 ? '提交时间': '审核时间'}}</th>
                     <th>作品分类</th>
-                    <th>作品类型</th>
-                    <th>附件内容</th>
                     <th>操作</th>
                 </tr>
             </thead>
@@ -111,10 +97,18 @@
                     <td>
                         {{ momentUnix(data.publishtime).format("YYYY/MM/DD") }}
                     </td>
-                    <td>{{ data.type }}</td>
-                    <td>{{ data.type }}</td>
-                    <!-- <td><a [attr.href]="data.asset_file[0]">下载 {{ data.workid }}</a></td>
-                    <td (click)="inspectDetails(data.workid)"><a>查看详情</a></td> -->
+                    <td>
+                        <span *ngIf="data.category === 0;else category">live2d</span>
+                        <ng-template #category>
+                            插画
+                        </ng-template>
+                    </td>
+
+                    <td>
+                        <a (click)="onInspectDetails(data.workid,data.submittype,data.version)">查看详情</a>
+                    </td>
+
+
                 </tr>
             </tbody>
         </nz-table>

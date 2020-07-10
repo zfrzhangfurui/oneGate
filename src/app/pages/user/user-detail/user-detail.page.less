@@ -1,11 +1,16 @@
+
 p{
     padding:0;
     margin: 0;
 }
-
 section{
     padding:10px 20px;
-    padding-bottom: 30px;
+    &:last-of-type{
+        padding-bottom: 30px;
+    }
+    
+}
+.section-detail{
     &>.title{
         display: flex;
         flex-direction: row;
@@ -41,3 +46,45 @@ section{
         }
     }
 }
+
+.section-arts{
+    &>.nav{
+        
+    }
+    &>.searchbar{
+        width: auto;
+        margin:20px 0;
+        border: 1px solid rgba(220, 222, 227, 1);
+        border-radius: 3px;
+        padding:10px 0;
+        & .searchbar-div{
+            display: flex;
+            flex-direction: column;
+            & .item_input {
+                height: 32px;
+                width: 100%;
+                background: rgba(255, 255, 255, 1);
+                border-radius: 2px 0px 0px 2px;
+                border: 1px solid rgba(0, 0, 0, 0.15);
+              }
+              & .date-input{
+                height:32px;
+                width: 45%;
+              }
+        }
+
+        &>.searchbar-confirm {
+            margin-top: 20px;
+            text-align: right;
+            margin-right: 20px;
+            &>button {
+                margin-right: 20px;
+            }
+        }   
+    }
+}
+
+table{
+    padding:10px 10px;
+}
+

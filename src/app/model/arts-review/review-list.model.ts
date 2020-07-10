@@ -10,7 +10,6 @@ export interface navConfigModel {
     et: string,
     t: number,
     ta: number,
-    c: number
 }
 //p:页码，s:页大小
 export interface tableConfigModel {
@@ -27,8 +26,7 @@ export interface httpModel {
     t: number,
     ta: number,
     p: number,
-    s: number,
-    c: number
+    s: number
 }
 
 export interface Error {

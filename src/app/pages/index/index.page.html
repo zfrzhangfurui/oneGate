@@ -1,21 +1,18 @@
 <nz-layout>
     <nz-header class="header">
-        <nz-switch class="collapsed-button" nzSize="big" [(ngModel)]="isCollapsed" nzCheckedChildren="开"
-            nzUnCheckedChildren="关">
-        </nz-switch>
     </nz-header>
     <nz-layout>
         <nz-sider nzTheme="light" nzCollapsible [nzTrigger]="null" nzWidth="200px" [nzCollapsed]="isCollapsed"
             [nzCollapsedWidth]="0">
-
-
             <app-sider></app-sider>
         </nz-sider>
         <nz-layout class="inner-layout">
             <nz-content>
+                <nz-switch class="collapsed-button" nzSize="big" [(ngModel)]="isCollapsed" nzCheckedChildren="开"
+                    nzUnCheckedChildren="关">
+                </nz-switch>
                 <router-outlet></router-outlet>
             </nz-content>
-
         </nz-layout>
     </nz-layout>
 </nz-layout>

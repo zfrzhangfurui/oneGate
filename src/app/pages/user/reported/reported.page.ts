@@ -38,14 +38,23 @@ export class ReportedPage implements OnInit {
     console.log('sdfdsf');
     console.log(tableConfig, ' qwe    ' + this.mode);
     // return this.http.get('');
-    return of(
-      [
+    let i = [];
+    if (this.mode === 0) {
+      i = [
         { uid: 1, nickname: 'dsfdsf', registertime: '2000/01/01' },
         { uid: 2, nickname: 'dsfdsf', registertime: '2000/01/01' },
         { uid: 3, nickname: 'dsfdsf', registertime: '2000/01/01' },
         { uid: 4, nickname: 'dsfdsf', registertime: '2000/01/01' },
       ]
-    )
+    } else if (this.mode === 1) {
+      i = [
+        { uid: 5, nickname: 'dsfdsf', registertime: '2000/01/01' },
+        { uid: 6, nickname: 'dsfdsf', registertime: '2000/01/01' },
+        { uid: 7, nickname: 'dsfdsf', registertime: '2000/01/01' },
+        { uid: 8, nickname: 'dsfdsf', registertime: '2000/01/01' },
+      ]
+    }
+    return of(i)
   }))
   // tableData$ = of([
   //   1, 2, 3, 4, 5, 6, 7

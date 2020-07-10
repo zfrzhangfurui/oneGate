@@ -21,3 +21,8 @@ export interface UserDetail {
         cardno: number
     }
 }
+
+export interface TableConfig {
+    pageIndex: number,
+    pageSize: number,
+}

@@ -1,0 +1,36 @@
+<div [ngSwitch]="modalSwitch">
+
+
+    <div *ngSwitchCase="'auditAccepted'">
+        <div style="display: flex;align-items: center;padding-bottom: 14px;">
+            <object class="svg" width="40px" height="20px" data="/assets/svgs/auditAccepted.svg" type="image/svg+xml"
+                codebase="http://www.adobe.com/svg/viewer/imstall/">
+            </object>
+            <p style="padding:0;margin:0">审核通过</p>
+        </div>
+
+        <p>是否确认审核通过？</p>
+        <p>审核通过后无法撤回，请谨慎操作。</p>
+    </div>
+
+
+
+
+
+    <div *ngSwitchCase="'auditDeclined'">
+        <p>
+            <object class="svg" width="30px" height="20px" data="/assets/svgs/auditDeclined.svg" type="image/svg+xml"
+                codebase="http://www.adobe.com/svg/viewer/imstall/">
+            </object>
+            审核拒绝
+        </p>
+        <p>请输入拒绝理由：</p>
+        <textarea rows="4" nz-input class="reason" [(ngModel)]="comments"></textarea>
+    </div>
+
+</div>
+
+<ng-template [nzModalFooter]>
+    <button nz-button nzType="default" (click)="handleCancel()">取消</button>
+    <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">确认</button>
+</ng-template>

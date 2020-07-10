@@ -1,4 +1,32 @@
-<div [ngSwitch]="modalSwitch">
+<div [ngSwitch]="modalSwitch" class="modal">
+    <!-- UserBanned -->
+    <div *ngSwitchCase="'UserBanned'" class="user-banned">
+        <p class="title">{{title}}</p>
+        <div class="name-div">
+            <p class="name-title">封禁用户：</p>
+            <p>{{content.base_info.nickname}}</p>
+        </div>
+        <div class="violation-info-div">
+            <p class="info-title">违规内容：</p>
+            <custom-select style="width: 77%;" [selectItem]="[1,2,3,4,5,6]" (valueChange)='displayCounter($event)'>
+            </custom-select>
+        </div>
+        <div class="violation-info-div">
+            <p class="info-title">违规内容：</p>
+            <custom-select style="width: 77%;" [selectItem]="[1,2,3,4,5,6]">
+            </custom-select>
+        </div>
+        <div class="violation-info-div">
+            <p class="info-title">封禁理由：</p>
+            <textarea rows="4" nz-input class="reason"></textarea>
+        </div>
+    </div>
+    <!-- BannedRelease -->
+    <div *ngSwitchCase="'UserBannedRelease'">
+        <p class="title">{{title}}</p>
+    </div>
+
+    <!-- BannedRecord -->
     <div *ngSwitchCase="'BannedRecord'">
         <p>{{title}}</p>
         <div>
@@ -9,22 +37,57 @@
                     [nzShowQuickJumper]="true">
                     <thead>
                         <tr>
-                            <th>用户ID</th>
-                            <th>用户名称</th>
-                            <th>注册时间</th>
-                            <th>操作</th>
+                            <th>封禁时间</th>
+                            <th>封禁时长</th>
+                            <th>违规编号</th>
+                            <th>解除封禁时间</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let data of basicTable.data">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><a>查看详情</a></td>
+                            <td>{{data.starttime}}</td>
+                            <td>{{data.day}}</td>
+                            <td>{{data.description}}</td>
+                            <td>{{data.endtime}}</td>
                         </tr>
                     </tbody>
                 </nz-table>
             </section>
         </div>
+    </div>
+
+    <!-- ***************************************Report page******************************************************************************************* -->
+    <!-- ReportViolation -->
+    <div *ngSwitchCase="'ReportViolation'" class="report-violation">
+        <p class="title">{{title}}</p>
+        <div class="name-div">
+            <p class="name-title">违规用户：</p>
+            <p>Furui</p>
+        </div>
+        <div class="violation-content">
+            <p class="content-title">违规内容：</p>
+            <p>作品违规</p>
+        </div>
+        <div class="ban-account">
+            <p class="account-title">是否封禁账号</p>
+        </div>
+        <div class="ban-time">
+            <p>封禁时长：</p>
+            <select>
+                <option value="volvo">1</option>
+                <option value="saab">2</option>
+                <option value="opel">3</option>
+                <option value="audi">4</option>
+            </select>
+        </div>
+        <div class="violation-info-div">
+            <p class="info-title">封禁理由：</p>
+            <textarea rows="4" nz-input class="reason"></textarea>
+        </div>
+    </div>
+    <!-- ReportNonViolation -->
+    <div *ngSwitchCase="'ReportNoneViolation'" class="report-none-violation">
+        <p class="title">{{title}}</p>
+        <p class="content">是否确认无违规</p>
     </div>
 </div>

@@ -1,0 +1,8 @@
+<div class="custom-select" #customselect>
+    <div class="select-selected" #select (click)="selectClicked()">{{content[0]}}</div>
+    <div class="select-items" *ngIf="selectToggle">
+        <div class="select-item select-selected" *ngFor="let item of content" (click)="itemClicked(item)">
+            {{item}}
+        </div>
+    </div>
+</div>
