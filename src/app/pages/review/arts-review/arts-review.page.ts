@@ -16,6 +16,7 @@ const defaultTablePageConfig: tableConfigModel = {
   s: 10
 }
 const defaultConfig: navConfigModel = {
+  i: null,
   w: null,
   n: '',
   un: '',
@@ -48,6 +49,7 @@ export class ArtsReviewPage implements OnInit, AfterViewInit {
   total = 1;
   form: FormGroup = this.fb.group({
     w: [null],
+    i: [null],
     n: [''],
     un: [''],
     st: [null],
@@ -77,21 +79,24 @@ export class ArtsReviewPage implements OnInit, AfterViewInit {
       this.tableLoadingToggle = true;
       let tableConfigClone = { ...tableConfig };
       let configClone: navConfigModel = { ...this.form.value };
-
+      console.log(this.form.value);
+      /*****************httpParamConfig function*************************/
       let httpParamConfig = function (config: navConfigModel, tableConfig: tableConfigModel): httpModel {
         let httpConfig: httpModel = Object.assign(config, tableConfig);
         httpConfig.p = httpConfig.p - 1;
         (httpConfig.w === null || httpConfig.w === '') ? httpConfig.w = '0' : true;
+        (httpConfig.i === null || httpConfig.i === '') ? httpConfig.i = '0' : true;
         httpConfig.st === null ? httpConfig.st = '1970/01/01' : httpConfig.st = moment(httpConfig.st).format('YYYY/MM/DD');
         httpConfig.et === null ? httpConfig.et = moment(Date()).format('YYYY/MM/DD') : httpConfig.et = moment(httpConfig.et).format('YYYY/MM/DD');
         return httpConfig;
       }
+      /********************************************************************/
       let httpConfig: httpModel = httpParamConfig(configClone, tableConfigClone);
       let req: string;
       if (mode === 0) {
         req = `/work/get_apply_work_list?w=${httpConfig.w}&p=${httpConfig.p}&s=${httpConfig.s}&n=${httpConfig.n}&un=${httpConfig.un}&st=${httpConfig.st}&et=${httpConfig.et}&t=${httpConfig.t}`;
       } else if (mode === 1 || mode === 2) {
-        req = `/work/get_audit_work_logs?w=${httpConfig.w}&p=${httpConfig.p}&s=${httpConfig.s}&n=${httpConfig.n}&un=${httpConfig.un}&st=${httpConfig.st}&et=${httpConfig.et}&t=${httpConfig.t}&a=${mode}`;
+        req = `/work/get_audit_work_logs?i=${httpConfig.i}&w=${httpConfig.w}&p=${httpConfig.p}&s=${httpConfig.s}&n=${httpConfig.n}&un=${httpConfig.un}&st=${httpConfig.st}&et=${httpConfig.et}&t=${httpConfig.t}&a=${mode}`;
       }
 
       console.log(req);

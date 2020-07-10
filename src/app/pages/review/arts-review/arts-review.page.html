@@ -26,6 +26,13 @@
                         <input nz-input OnlyNumber="true" class="review__menu-searchbar-item_input" placeholder="请输入"
                             formControlName="w" />
                     </div>
+
+                    <div *ngIf="mode !== 0" class="menu-searchbar-div" nz-col nzSpan="3">
+                        <label>审核ID：</label>
+
+                        <input nz-input OnlyNumber="true" class="review__menu-searchbar-item_input" placeholder="请输入"
+                            formControlName="i" />
+                    </div>
                     <div class="menu-searchbar-div" nz-col nzSpan="3">
                         <label>作品名称：</label>
                         <input nz-input class="review__menu-searchbar-item_input" placeholder="请输入"

@@ -3,6 +3,7 @@ export interface ArtsReviewModel {
     list: []
 }
 export interface navConfigModel {
+    i?: string,
     w: string,
     n: string,
     un: string,
@@ -18,6 +19,7 @@ export interface tableConfigModel {
 }
 
 export interface httpModel {
+    i?: string,
     w: string,
     n: string,
     un: string,
